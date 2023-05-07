@@ -1,5 +1,5 @@
 {
-  "name": "overfungi",
+  "name": "kantarel",
   "bin": "server.js",
   "dependencies": {
     "bootstrap": "^5.3.0-alpha3",
@@ -15,6 +15,7 @@
     "scripts": "server.js",
     "assets": [
       "index.html",
+      "static/**/*",
       "static/*",
       "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
       "node_modules/bootstrap/dist/css/bootstrap.min.css",

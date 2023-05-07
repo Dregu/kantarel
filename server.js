@@ -156,8 +156,8 @@ function setBuf(y, x, val, len) {
   ps = {};
 }
 
-app.use(express.static('node_modules/bootstrap/dist'));
-app.use(express.static('static'));
+app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
+app.use(express.static(path.join(__dirname, 'static')));
 
 function handle(data, ws) {
   if (data.type == 'get') {
