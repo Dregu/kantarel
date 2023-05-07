@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <title>KANTAREL | Lone Fungus Save Editor</title>
+  <style>
+    #data { display: table; border-collapse: collapse; }
+    .xrow { display: table-row; }
+    .header { font-weight: bold; }
+    .label { display: table-cell; border: 1px solid #111; white-space: nowrap; }
+    .label button { float: right; margin: -3px 3px; }
+    .num { display: block; text-align: right; font-weight: bold; }
+    .name { display: block; }
+    .cell { display: table-cell; text-align: center; border: 1px solid #111; }
+    .cell[title], .cell[title] input { background: white; }
+    .relic, .cell[title^="relic"], .cell[title^="relic"] input { background: skyblue; }
+    .spell, .cell[title^="spell"], .cell[title^="spell"] input { background: gold; }
+    .emblem, .cell[title^="emblem"], .cell[title^="emblem"] input { background: darksalmon; }
+    .ability, .cell[title^="ability"], .cell[title^="ability"] input { background: lime; }
+    .upgrade, .cell[title^="upgrade"], .cell[title^="upgrade"] input { background: limegreen; }
+    .health, .cell[title^="health"], .cell[title^="health"] input { background: limegreen; }
+    .equip, .cell[title^="equip"], .cell[title^="equip"] input { background: aqua; }
+    .mindshroom, .cell[title^="mindshroom"], .cell[title^="mindshroom"] input { background: cornflowerblue; }
+    .ladybug, .cell[title^="ladybug"], .cell[title^="ladybug"] input { background: hotpink; }
+    .item, .cell[title^="item"], .cell[title^="item"] input { background: lightgreen; }
+    .map, .cell[title^="map"], .cell[title^="map"] input { background: mediumslateblue; }
+    .assist, .cell[title^="assist"], .cell[title^="assist"] input { background: magenta; }
+    .brain, .cell[title^="brain"], .cell[title^="brain"] input { background: pink; }
+    .igt, .cell[title^="igt"], .cell[title^="igt"] input { background: red; }
+    .room, .cell[title^="room"], .cell[title^="room"] input { background: #d4ea35; }
+    .astral, .cell[title^="astral"], .cell[title^="astral"] input { background: #be8bf3; }
+  </style>
+</head>
+<body data-bs-theme="dark">
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-sm">
+      <a class="navbar-brand">KANTAREL</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcontent" aria-controls="navcontent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navcontent">
+        <ul class="navbar-nav" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link btn btn-secondary active" id="items-tab" data-bs-toggle="tab" data-bs-target="#items" type="button" role="tab" aria-controls="items" aria-selected="true">Items</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link btn btn-secondary" id="map-tab" data-bs-toggle="tab" data-bs-target="#map" type="button" role="tab" aria-controls="map" aria-selected="false">Map</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link btn btn-secondary" id="misc-tab" data-bs-toggle="tab" data-bs-target="#misc" type="button" role="tab" aria-controls="misc" aria-selected="false">Misc</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link btn btn-secondary" id="debug-tab" data-bs-toggle="tab" data-bs-target="#debug" type="button" role="tab" aria-controls="debug" aria-selected="false">&hellip;</button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="tab-content" id="content">
+      <div class="tab-pane" id="map" role="tabpanel" aria-labelledby="map-tab">
+        <div class="input-group">
+          <span class="input-group-text">Room:</span>
+          <input type="number" class="form-control" placeholder="Room" id="room">
+          <button class="btn btn-success" id="warp-room">Set as save room (Up+B to warp)</button>
+          <button class="btn btn-success" id="warp-instant">Instant warp (into a wall)</button>
+        </div>
+        TODO: click room to warp -map
+      </div>
+      <div class="tab-pane show active" id="items" role="tabpanel" aria-labelledby="items-tab">
+        <div class="row">
+          <div class="col-lg-6">
+            <h3>Abilities</h3>
+            <div class="k-box" id="abilities-box"></div>
+            <h3>Items</h3>
+            <div class="k-box" id="items-box"></div>
+          </div>
+          <div class="col-lg-6">
+            <h3>Spells</h3>
+            <div class="k-box" id="spells-box"></div>
+            <h3>Emblems</h3>
+            <div class="k-box" id="emblems-box"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <h3>Relics</h3>
+            <div class="k-box" id="relics-box"></div>
+          </div>
+          <div class="col-lg-6">
+            <h3>&nbsp;</h3>
+            <div class="k-box" id="relics2-box"></div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="misc" role="tabpanel" aria-labelledby="misc-tab">
+        <h3>Miscellaneous</h3>
+
+        <h4>Items</h4>
+        <div class="btn-group" role="group">
+          <button class="btn btn-primary" id="give-all">Give all items</button>
+          <button class="btn btn-primary" id="remove-all">Remove all items</button>
+        </div>
+
+        <h4>Collectibles</h4>
+        <div class="btn-group" role="group">
+          <button class="btn btn-primary" id="give-collectibles">Give all collectibles</button>
+          <button class="btn btn-primary" id="remove-collectibles">Remove all collectibles</button>
+        </div>
+
+        <h4>Upgrades</h4>
+        <div class="btn-group" role="group">
+          <button class="btn btn-primary" id="give-upgrades">Give all upgrades</button>
+          <button class="btn btn-primary" id="remove-upgrades">Remove all upgrades</button>
+        </div>
+
+        <h4>Map & Secrets</h4>
+        <div class="btn-group" role="group">
+          <button class="btn btn-primary" id="give-map">Reveal all</button>
+          <button class="btn btn-primary" id="remove-map">Hide all</button>
+        </div>
+
+
+        <h4>TODO</h4>
+        <button class="btn btn-primary" id="give-collectibles" disabled>Different collectibles</button><br>
+      </div>
+      <div class="tab-pane" id="debug" role="tabpanel" aria-labelledby="debug-tab">
+        <h3>All data</h3>
+        <div id="data" data-bs-theme="light"></div>
+        <h3>Log</h3>
+        <div id="log"></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div id="bs"></div>
+  </div>
+
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>

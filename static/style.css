@@ -1,0 +1,55 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+}
+
+.navbar-brand {
+  font-weight: 100;
+  letter-spacing: 5px;
+  font-size: 0.9em;
+  margin-left: 5px;
+}
+
+.nav-item {
+  margin: 0 2px;
+  white-space: nowrap;
+}
+
+.k-box {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#abilities-box .k-item, #spells-box .k-item, #emblems-box .k-item, #items-box .k-item {
+  flex: 1 0 13%;
+  margin: 0.5%;
+}
+
+#relics-box .k-item, #relics2-box .k-item {
+  flex: 1 0 14%;
+  margin: 0.5%;
+}
+
+#spells-box .k-item {
+  flex: 1 0 16%;
+  margin: 0.5%;
+}
+
+.k-item button {
+  padding: 0;
+  width: 100%;
+  height: 80px;
+  font-size: 0.6em;
+}
+
+.k-item img {
+  filter: grayscale(100%);
+  height: 42px;
+}
+
+.k-item button.active img {
+  filter: grayscale(0%);
+}
+
+.k-item .k-label {
+  height: 2em;
+}
