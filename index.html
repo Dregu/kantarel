@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lone Fungus Save Editor</title>
+<style>
+body { font-family: monospace; }
+#data { display: table; border-collapse: collapse; }
+.row { display: table-row; }
+.header { font-weight: bold; }
+.label { display: table-cell; border: 1px solid #111; white-space: nowrap; }
+.label button { float: right; margin: -3px 3px; }
+.num { display: block; text-align: right; font-weight: bold; }
+.name { display: block; }
+.cell { display: table-cell; text-align: center; border: 1px solid #111; background: lightgray; }
+.cell input { background: lightgray; }
+.cell[title], .cell[title] input { background: white; }
+.relic, .cell[title^="relic"], .cell[title^="relic"] input { background: skyblue; }
+.spell, .cell[title^="spell"], .cell[title^="spell"] input { background: gold; }
+.emblem, .cell[title^="emblem"], .cell[title^="emblem"] input { background: darksalmon; }
+.ability, .cell[title^="ability"], .cell[title^="ability"] input { background: lime; }
+.upgrade, .cell[title^="upgrade"], .cell[title^="upgrade"] input { background: limegreen; }
+.health, .cell[title^="health"], .cell[title^="health"] input { background: limegreen; }
+.equip, .cell[title^="equip"], .cell[title^="equip"] input { background: aqua; }
+.mindshroom, .cell[title^="mindshroom"], .cell[title^="mindshroom"] input { background: cornflowerblue; }
+.ladybug, .cell[title^="ladybug"], .cell[title^="ladybug"] input { background: hotpink; }
+.item, .cell[title^="item"], .cell[title^="item"] input { background: lightgreen; }
+.map, .cell[title^="map"], .cell[title^="map"] input { background: mediumslateblue; }
+.assist, .cell[title^="assist"], .cell[title^="assist"] input { background: magenta; }
+.brain, .cell[title^="brain"], .cell[title^="brain"] input { background: pink; }
+.igt, .cell[title^="igt"], .cell[title^="igt"] input { background: red; }
+.room, .cell[title^="room"], .cell[title^="room"] input { background: #d4ea35; }
+.astral, .cell[title^="astral"], .cell[title^="astral"] input { background: #be8bf3; }
+</style>
+</head>
+<body>
+<div id='info'>Quick and dirty live save data editor / trainer for Lone Fungus.</div>
+<div id='ctrl'></div>
+<div id='data'></div>
+<div id='log'></div>
+<div id='bs'></div>
+<script>
+const row_names = {
+    0: '<span class="ability">abilities</span> <span class="equip">equip state</span>',
+    1: '<span class="health">health</span> <span class="spell">spells</span> <span class="relic">relics</span> <span class="emblem">emblems</span>',
+    2: '<span class="brain">brainnodes</span> <span class="ability">abilities</span> <span class="room">room</span> <span class="igt">igt</span> <span class="upgrade">upgrades</span>',
+    3: '<span class="mindshroom">mindshrooms</span>',
+    4: '<span class="health">health pieces</span>',
+    5: 'switches walls vines (full row)',
+    6: '<span class="ladybug">ladybugs</span>',
+    7: 'boss room chains',
+    8: '<span class="assist">assists</span> <span class="map">pins</span> <span class="map">mapshrooms</span>',
+    9: '<span class="astral">astral fragments</span>',
+    11: '<span class="room">rooms</span>: color caverns',
+    12: '<span class="room">rooms</span>: mechanical fort',
+    13: '<span class="room">rooms</span>: deep grotto',
+    14: '<span class="room">rooms</span>: corrupted tunnels',
+    15: '<span class="room">rooms</span>: acid dungeon',
+    16: '<span class="room">rooms</span>: lava temple',
+    17: '<span class="room">rooms</span>: gold mines',
+    18: '<span class="room">rooms</span>: undergrounds',
+    19: '<span class="room">rooms</span>: frozen depths',
+    20: '<span class="room">rooms</span>: mossy ruins',
+    21: '<span class="room">rooms</span>: surface',
+    22: 'watcher encounters',
+    23: 'talked to statues (count)',
+    24: 'something map related, maybe shrines',
+    25: 'midbosses seen'
+};
+
+const names = [
+    // 0
+    { 0: 'ability: pine sword', 1: 'ability: forward dash', 2: 'ability: upwards dash', 4: 'ability: great slash',
+
+        5: 'equip: spell: bouncy spore', 6: 'equip: spell: spicy nut', 7: 'equip: spell: vibrant crystal', 8: 'equip: spell: returning contraption', 9: 'equip: spell: bouncy ball', 11: 'equip: spell: golden light', 42: 'equip: spell: boost projectile', 43: 'equip: spell: acid hammer', 68: 'equip: spell: spark ball', 72: 'equip: spell: berserk',
+
+        16: 'equip: relic: holy counter heal',
+        29: 'equip: relic: mind recovery',
+        37: 'equip: relic: fast recovery',
+        38: 'equip: relic: counter heal',
+        48: 'equip: relic: invincibility stone',
+        76: 'equip: relic: recovery armor',
+
+        21: 'equip: relic: mind shell',
+        35: 'equip: relic: purple mindshroom',
+        26: 'equip: relic: refreshing body',
+        57: 'equip: relic: combo heal',
+        64: 'equip: relic: blue health orb',
+        56: 'equip: relic: green health orb',
+
+        23: 'equip: relic: meditation blast',
+        25: 'equip: relic: stone body',
+        46: 'equip: relic: projectile shield',
+        63: 'equip: relic: spike shield',
+        24: 'equip: relic: super healing',
+        34: 'equip: relic: cheaper healing',
+
+        58: 'equip: relic: spike bounce',
+        96: 'equip: relic: restoration protection',
+        87: 'equip: relic: lunar orb',
+        70: 'equip: relic: barry',
+        54: 'equip: relic: magic bean',
+        20: 'equip: relic: double shot',
+
+        13: 'equip: relic: quick feet',
+        51: 'equip: relic: acid infusion',
+        14: 'equip: relic: counter dodge',
+        41: 'equip: relic: shadow spin',
+        18: 'equip: relic: magic dice',
+        17: 'equip: relic: devil\'s dice',
+
+        39: 'equip: relic: spell booster',
+        40: 'equip: relic: strong spell booster',
+        19: 'equip: relic: spell sphere',
+        94: 'equip: relic: sword booster',
+        77: 'equip: relic: fast charge',
+        97: 'equip: relic: crescent protector',
+
+        31: 'equip: relic: long slash',
+        32: 'equip: relic: wide slash',
+        90: 'equip: relic: swordmaster\'s trinket',
+        71: 'equip: relic: big meteor blast',
+        65: 'equip: relic: large great slash',
+        45: 'equip: relic: big spin slash',
+
+        30: 'equip: relic: poison slash',
+        27: 'equip: relic: quick slash',
+        55: 'equip: relic: sorcerer\'s slash',
+        15: 'equip: relic: spectre slash',
+        67: 'equip: relic: fire slash',
+        69: 'equip: relic: lightning slash',
+
+        47: 'equip: relic: counter attack',
+        22: 'equip: relic: mind slash',
+        50: 'equip: relic: combo slash',
+        49: 'equip: relic: shroomouken relic',
+        74: 'equip: relic: velocity slash',
+        36: 'equip: relic: dark lord\'s trinket',
+
+        61: 'equip: relic: steady body',
+        73: 'equip: relic: rose slash',
+        93: 'equip: relic: knight\'s trinket',
+        33: 'equip: relic: hex mushroom',
+        66: 'equip: relic: projectile pogo',
+        62: 'equip: relic: spicy mushroom',
+
+        78: 'equip: emblem: double flash',
+        79: 'equip: emblem: short cooldown',
+        85: 'equip: emblem: healing parry',
+        86: 'equip: emblem: parry vortex',
+        88: 'equip: emblem: parry sprint',
+        92: 'equip: emblem: ice block',
+        95: 'equip: emblem: auto parry',
+
+        80: 'equip: emblem: protection parry',
+        81: 'equip: emblem: mind parry',
+        82: 'equip: emblem: swordmaster parry',
+        83: 'equip: emblem: fire parry',
+        84: 'equip: emblem: power reflect',
+        89: 'equip: emblem: laser parry',
+        91: 'equip: emblem: living projectile'
+    },
+    // 1
+    { 0: 'health', 1: 'mana', 2: 'brainnodes', 3: 'health piece count', 29: 'available spell stones', 56: 'available emblem stones?',
+
+        5: 'spell: bouncy spore', 6: 'spell: spicy nut', 7: 'spell: vibrant crystal', 8: 'spell: returning contraption', 9: 'spell: bouncy ball', 11: 'spell: golden light', 42: 'spell: boost projectile', 43: 'spell: acid hammer', 68: 'spell: spark ball', 72: 'spell: berserk',
+
+        16: 'relic: holy counter heal',
+        29: 'relic: mind recovery',
+        37: 'relic: fast recovery',
+        38: 'relic: counter heal',
+        48: 'relic: invincibility stone',
+        76: 'relic: recovery armor',
+
+        21: 'relic: mind shell',
+        35: 'relic: purple mindshroom',
+        26: 'relic: refreshing body',
+        57: 'relic: combo heal',
+        64: 'relic: blue health orb',
+        56: 'relic: green health orb',
+
+        23: 'relic: meditation blast',
+        25: 'relic: stone body',
+        46: 'relic: projectile shield',
+        63: 'relic: spike shield',
+        24: 'relic: super healing',
+        34: 'relic: cheaper healing',
+
+        58: 'relic: spike bounce',
+        96: 'relic: restoration protection',
+        87: 'relic: lunar orb',
+        70: 'relic: barry',
+        54: 'relic: magic bean',
+        20: 'relic: double shot',
+
+        13: 'relic: quick feet',
+        51: 'relic: acid infusion',
+        14: 'relic: counter dodge',
+        41: 'relic: shadow spin',
+        18: 'relic: magic dice',
+        17: 'relic: devil\'s dice',
+
+        39: 'relic: spell booster',
+        40: 'relic: strong spell booster',
+        19: 'relic: spell sphere',
+        94: 'relic: sword booster',
+        77: 'relic: fast charge',
+        97: 'relic: crescent protector',
+
+        31: 'relic: long slash',
+        32: 'relic: wide slash',
+        90: 'relic: swordmaster\'s trinket',
+        71: 'relic: big meteor blast',
+        65: 'relic: large great slash',
+        45: 'relic: big spin slash',
+
+        30: 'relic: poison slash',
+        27: 'relic: quick slash',
+        55: 'relic: sorcerer\'s slash',
+        15: 'relic: spectre slash',
+        67: 'relic: fire slash',
+        69: 'relic: lightning slash',
+
+        47: 'relic: counter attack',
+        22: 'relic: mind slash',
+        50: 'relic: combo slash',
+        49: 'relic: shroomouken relic',
+        74: 'relic: velocity slash',
+        36: 'relic: dark lord\'s trinket',
+
+        61: 'relic: steady body',
+        73: 'relic: rose slash',
+        93: 'relic: knight\'s trinket',
+        33: 'relic: hex mushroom',
+        66: 'relic: projectile pogo',
+        62: 'relic: spicy mushroom',
+
+        78: 'emblem: double flash',
+        79: 'emblem: short cooldown',
+        85: 'emblem: healing parry',
+        86: 'emblem: parry vortex',
+        88: 'emblem: parry sprint',
+        92: 'emblem: ice block',
+        95: 'emblem: auto parry',
+
+        80: 'emblem: protection parry',
+        81: 'emblem: mind parry',
+        82: 'emblem: swordmaster parry',
+        83: 'emblem: fire parry',
+        84: 'emblem: power reflect',
+        89: 'emblem: laser parry',
+        91: 'emblem: living projectile'
+    },
+    // 2
+    {
+        0: 'brainnode', 1: 'brainnode', 2: 'brainnode', 3: 'brainnode', 4: 'brainnode', 5: 'brainnode', 6: 'brainnode', 7: 'brainnode', 8: 'brainnode',
+
+        34: 'room saved (1-based)',
+
+        41: 'igt: second', 42: 'igt: minute', 43: 'igt: hour',
+
+        51: 'ladybugs: inserted', 45: 'ladybugs: total',
+
+        71: 'tutorial: downward slash', 83: 'tutorial: how to use spells', 84: 'killed: enemies', 85: 'killed: flowers',
+
+        89: 'upgade: sharpening stone', 90: 'upgade: sharpening stone', 91: 'upgade: sharpening stone', 92: 'upgade: sharpening stone',
+
+        24: 'ability: dash crystal', 28: 'ability: mushmover infusion', 30: 'ability: wall-bounce', 31: 'ability: crouch jump', 32: 'ability: water breath', 33: 'ability: ground-bounce', 35: 'ability: meteor strike', 36: 'ability: teleportation wand', 39: 'ability: spin jump', 40: 'ability: conjure mushmover', 46: 'ability: blue key infusion', 47: 'ability: great spin-slash', 48: 'ability: royal ornament', 49: 'ability: magic crouch jump', 50: 'ability: magnetic fungus', 52: 'ability: healing fungus', 53: 'ability: shield cap', 58: 'ability: acid sandals', 59: 'ability: fire bounce', 60: 'ability: magic dash', 61: 'ability: silver ornament', 63: 'ability: power extractor', 64: 'ability: spin-bounce', 65: 'item: all-seeing eye', 67: 'ability: astral mushmover', 69: 'item: iron key', 73: 'item: gold key'
+    },
+    // 3
+    {},
+    // 4
+    {
+        12: 'health piece: ladybug reward'
+    },
+    // 5
+    {},
+    // 6
+    {},
+    // 7
+    {},
+    // 8
+    {
+        0: 'assist: magic platforms',
+        1: 'assist: stronger sword',
+        2: 'assist: infinite mp',
+        3: 'assist: invincibility',
+        4: 'assist: worldmap hints',
+        5: 'assist: platforming pause 1..6',
+
+        18: 'map pins (feature)',
+        19: 'map pins (item)',
+
+        49: 'mapshroom: color caverns',
+        50: 'mapshroom: mechnanical fort',
+        51: 'mapshroom: deep grotto',
+        52: 'mapshroom: corrupted tunnels',
+        53: 'mapshroom: acid dungeon',
+        54: 'mapshroom: lava temple',
+        55: 'mapshroom: gold mines',
+        56: 'mapshroom: undergrounds',
+        57: 'mapshroom: frozen depths',
+        58: 'mapshroom: mossy ruins'
+    },
+    // 9
+    {},
+    // 10
+    {},
+    // 11
+    {},
+    // 12
+    {},
+    // 13
+    {},
+    // 14
+    {},
+    // 15
+    {},
+    // 16
+    {},
+    // 17
+    {},
+    // 18
+    {},
+    // 19
+    {},
+    // 20
+    {},
+    // 21
+    {},
+    // 22
+    {},
+    // 23
+    {},
+    // 24
+    {},
+    // 25
+    {}
+];
+
+for (var x = 0; x < 75; ++x) names[3][x] = 'mindshroom';
+for (var x = 0; x < 12; ++x) names[4][x] = 'health piece';
+for (var x = 0; x < 25; ++x) names[6][x] = 'ladybug';
+for (var x = 0; x < 47; ++x) names[9][x] = 'astral fragment';
+
+var ws = new WebSocket(window.location.href.replace('http', 'ws'));
+var cel = document.getElementById('ctrl');
+var el = document.getElementById('data');
+var lel = document.getElementById('log');
+var bs = document.getElementById('bs');
+let but = document.createElement('button');
+but.innerHTML = 'Update';
+but.onclick = function(e) {
+    ws.send(JSON.stringify({'type':'get'}));
+};
+cel.append(but);
+
+let auto = document.createElement('input');
+auto.type = 'checkbox';
+auto.checked = true;
+cel.append(auto);
+
+let warproom = document.createElement('input');
+warproom.id = 'warproom';
+warproom.type = 'number';
+cel.append(warproom);
+
+let warpalt = document.createElement('input');
+warpalt.type = 'checkbox';
+
+let warp = document.createElement('button');
+warp.innerHTML = 'Warp';
+warp.onclick = function(e) {
+    ws.send(JSON.stringify({'type': 'warp', 'room': document.getElementById('warproom').value, 'alt': (warpalt.checked ? 1 : 0) }));
+};
+cel.append(warp);
+cel.append(warpalt);
+
+var foo = {};
+
+Object.entries(names).forEach(e => {
+    const [y, row] = e;
+    Object.entries(row).forEach(e => {
+        const [x, name] = e;
+        let cat = name.split(':')[0];
+        if (!foo[cat]) foo[cat] = [];
+        foo[cat].push(name + "," + y + "," + x + "<br>");
+        //bs.innerHTML += name + "," + y + "," + x + "<br>";
+    });
+});
+
+Object.entries(foo).forEach(e => {
+    const [cat, stuff] = e;
+    stuff.forEach(e => {
+        //bs.innerHTML += e;
+    });
+});
+
+var oldw = 0;
+var checks = {};
+var inputs = {};
+
+ws.onopen = function() {
+    ws.send(JSON.stringify({'type':'get'}));
+    setInterval(function() {
+        if (auto.checked)
+            ws.send(JSON.stringify({'type':'get'}));
+    }, 1000);
+};
+
+ws.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var h = data.length;
+    if (h == 0) return;
+    var w = data[0].length;
+    if (w != oldw) {
+        el.innerHTML = '';
+        checks = {};
+        inputs = {};
+        let rel = document.createElement('div');
+        rel.className = 'row';
+        let label = document.createElement('span');
+        label.className = 'label';
+        label.innerHTML = w + ', ' + h;
+        rel.append(label);
+        for (let x = 0; x < w; ++x) {
+            let iel = document.createElement('div');
+            iel.className = 'cell header';
+            iel.innerHTML = x;
+            rel.append(iel);
+        }
+        el.append(rel);
+    }
+    oldw = w;
+    Object.entries(data).forEach(entry => {
+        const [y, row] = entry;
+        let rel = document.querySelector('.row[data-row="'+y+'"]');
+        let add = false;
+        if (!rel) {
+            add = true;
+            rel = document.createElement('div');
+            rel.className = 'row';
+            rel.dataset.row = y;
+            let label = document.createElement('span');
+            label.className = 'label';
+            label.innerHTML = '<span class="num">' + y + '</span>' + (row_names[y] ? '<span class="name">'+row_names[y]+'</span>' : '');
+            let all = document.createElement('button');
+            all.innerHTML = 'all';
+            all.dataset.row = y;
+            all.onclick = function(e) {
+                document.querySelectorAll('input[type="checkbox"][data-y="'+e.target.dataset.row+'"]').forEach(function(i) {
+                        i.click();
+                    });
+            };
+            label.prepend(all);
+            rel.append(label);
+        }
+        Object.entries(row).forEach(entry => {
+            const [x, val] = entry;
+            if (!checks[y] || !checks[y][x]) {
+                let iel = document.createElement('div');
+                iel.className = 'cell';
+                iel.dataset.col = x;
+                iel.dataset.row = y;
+                if (names[y] && names[y][x])
+                    iel.title = names[y][x];
+
+                let box = document.createElement('input');
+                box.type = 'checkbox';
+                box.dataset.x = x;
+                box.dataset.y = y;
+                box.dataset.val = val;
+                box.checked = val > 0;
+                //box.disabled = val > 1;
+                box.onclick = function(e) {
+                    let val = e.target.checked ? 1 : 0;
+                    ws.send(JSON.stringify({'type': 'set', 'x': e.target.dataset.x, 'y': e.target.dataset.y, 'value': val}));
+                };
+                if (!checks[y]) checks[y] = {};
+                checks[y][x] = box;
+                iel.append(box);
+
+                let box2 = document.createElement('input');
+                box2.type = 'text';
+                box2.size = 1;
+                box2.dataset.x = x;
+                box2.dataset.y = y;
+                box2.dataset.val = val;
+                box2.value = val;
+                box2.onchange = function(e) {
+                    ws.send(JSON.stringify({'type': 'set', 'x': e.target.dataset.x, 'y': e.target.dataset.y, 'value': e.target.value}));
+                };
+                if (!inputs[y]) inputs[y] = {};
+                inputs[y][x] = box2;
+                iel.append(box2);
+
+                rel.append(iel);
+            } else {
+                if (checks[y] && checks[y][x]) checks[y][x].checked = val > 0;
+                if (inputs[y] && inputs[y][x] && inputs[y][x] != document.activeElement && inputs[y][x].dataset.val != val) {
+                    if (y != 2 || (x != 41 && x != 42 && x != 43)) {
+                        let line = document.createElement('div')
+                        line.innerHTML = ((new Date).toLocaleTimeString('it-IT')) + " | " + inputs[2][43].value + ":" + inputs[2][42].value + ":" + inputs[2][41].value + " | " + y + ", " + x + " : " + inputs[y][x].value + " -> " + val;
+                        log.append(line);
+                    }
+                    inputs[y][x].value = val;
+                    inputs[y][x].dataset.val = val;
+                }
+            }
+        });
+        if (add)
+            el.append(rel);
+    });
+};
+
+</script>
+</body>
+</html>
