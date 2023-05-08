@@ -121,3 +121,14 @@ body, html {
   stroke: #000000;
   stroke-width: 0.2;
 }
+
+#warning {
+  display: none;
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, 0);
+  z-index: 10000;
+  padding: 8px;
+}

@@ -569,7 +569,11 @@ ws.onmessage = function (e) {
   for (let y = 0; y < h; ++y) {
     data[y] = Array.from(buf.slice(y*w+8, y*w+w+8));
   }
-  if (!data) return;
+  if (!data || data.length == 0) {
+    document.getElementById("warning").style.display = "flex";
+    return;
+  }
+  document.getElementById("warning").style.display = "none";
 
   Object.entries(data).forEach(entry => {
     const [y, row] = entry;

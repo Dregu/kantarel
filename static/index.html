@@ -5,38 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
-  <title>KANTAREL | Lone Fungus Save Editor</title>
+  <title>KANTAREL 0.1 | Lone Fungus Live Save Editor</title>
   <style>
-    #data { display: table; border-collapse: collapse; }
-    .xrow { display: table-row; }
-    .header { font-weight: bold; }
-    .label { display: table-cell; border: 1px solid #111; white-space: nowrap; }
-    .label button { float: right; margin: -3px 3px; }
-    .num { display: block; text-align: right; font-weight: bold; }
-    .name { display: block; }
-    .cell { display: table-cell; text-align: center; border: 1px solid #111; }
-    .cell[title], .cell[title] input { background: white; }
-    .relic, .cell[title^="relic"], .cell[title^="relic"] input { background: skyblue; }
-    .spell, .cell[title^="spell"], .cell[title^="spell"] input { background: gold; }
-    .emblem, .cell[title^="emblem"], .cell[title^="emblem"] input { background: darksalmon; }
-    .ability, .cell[title^="ability"], .cell[title^="ability"] input { background: lime; }
-    .upgrade, .cell[title^="upgrade"], .cell[title^="upgrade"] input { background: limegreen; }
-    .health, .cell[title^="health"], .cell[title^="health"] input { background: limegreen; }
-    .equip, .cell[title^="equip"], .cell[title^="equip"] input { background: aqua; }
-    .mindshroom, .cell[title^="mindshroom"], .cell[title^="mindshroom"] input { background: cornflowerblue; }
-    .ladybug, .cell[title^="ladybug"], .cell[title^="ladybug"] input { background: hotpink; }
-    .item, .cell[title^="item"], .cell[title^="item"] input { background: lightgreen; }
-    .map, .cell[title^="map"], .cell[title^="map"] input { background: mediumslateblue; }
-    .assist, .cell[title^="assist"], .cell[title^="assist"] input { background: magenta; }
-    .brain, .cell[title^="brain"], .cell[title^="brain"] input { background: pink; }
-    .igt, .cell[title^="igt"], .cell[title^="igt"] input { background: red; }
-    .room, .cell[title^="room"], .cell[title^="room"] input { background: #d4ea35; }
-    .astral, .cell[title^="astral"], .cell[title^="astral"] input { background: #be8bf3; }
+      #data { display: table; border-collapse: collapse; }
+      .xrow { display: table-row; }
+      .header { font-weight: bold; }
+      .label { display: table-cell; border: 1px solid #111; white-space: nowrap; }
+      .label button { float: right; margin: -3px 3px; }
+      .num { display: block; text-align: right; font-weight: bold; }
+      .name { display: block; }
+      .cell { display: table-cell; text-align: center; border: 1px solid #111; }
+      .cell[title], .cell[title] input { background: white; }
+      .relic, .cell[title^="relic"], .cell[title^="relic"] input { background: skyblue; }
+      .spell, .cell[title^="spell"], .cell[title^="spell"] input { background: gold; }
+      .emblem, .cell[title^="emblem"], .cell[title^="emblem"] input { background: darksalmon; }
+      .ability, .cell[title^="ability"], .cell[title^="ability"] input { background: lime; }
+      .upgrade, .cell[title^="upgrade"], .cell[title^="upgrade"] input { background: limegreen; }
+      .health, .cell[title^="health"], .cell[title^="health"] input { background: limegreen; }
+      .equip, .cell[title^="equip"], .cell[title^="equip"] input { background: aqua; }
+      .mindshroom, .cell[title^="mindshroom"], .cell[title^="mindshroom"] input { background: cornflowerblue; }
+      .ladybug, .cell[title^="ladybug"], .cell[title^="ladybug"] input { background: hotpink; }
+      .item, .cell[title^="item"], .cell[title^="item"] input { background: lightgreen; }
+      .map, .cell[title^="map"], .cell[title^="map"] input { background: mediumslateblue; }
+      .assist, .cell[title^="assist"], .cell[title^="assist"] input { background: magenta; }
+      .brain, .cell[title^="brain"], .cell[title^="brain"] input { background: pink; }
+      .igt, .cell[title^="igt"], .cell[title^="igt"] input { background: red; }
+      .room, .cell[title^="room"], .cell[title^="room"] input { background: #d4ea35; }
+      .astral, .cell[title^="astral"], .cell[title^="astral"] input { background: #be8bf3; }
   </style>
 </head>
 <body data-bs-theme="dark">
-  <div class="container-fluid">
-    <nav class="navbar navbar-expand-sm">
+<div id="warning" class="alert alert-danger" role="alert">
+   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+   </svg>
+   <div class="flex-shrink-0">
+      No active save file found! Load a game to edit live or drop a (TODO) saveXX file in the editor!
+   </div>
+</div>
+<div class="container-fluid">
+   <nav class="navbar navbar-expand-sm">
       <a class="navbar-brand">KANTAREL</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcontent" aria-controls="navcontent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -61,7 +69,7 @@
     <div class="tab-content" id="content">
       <div class="tab-pane" id="map" role="tabpanel" aria-labelledby="map-tab">
         <div class="input-group">
-          <span class="input-group-text">Room:</span>
+          <span class="input-group-text">Room</span>
           <input type="number" class="form-control" placeholder="Enter room number or click on the map to set room" id="room">
           <button class="btn btn-success" id="warp">Set as Up+Heal warp</button>
           <div class="input-group-text form-check form-switch">
