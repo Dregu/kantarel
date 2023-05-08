@@ -122,13 +122,17 @@ body, html {
   stroke-width: 0.2;
 }
 
-#warning {
+.alert {
   display: none;
-  position: absolute;
-  top: 7px;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, 0);
-  z-index: 10000;
   padding: 8px;
+  margin: 7px;
+}
+
+@media (min-width: 992px) {
+  .alert {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10000;
+  }
 }

@@ -571,9 +571,11 @@ ws.onmessage = function (e) {
   }
   if (!data || data.length == 0) {
     document.getElementById("warning").style.display = "flex";
+    document.getElementById("online").style.display = "none";
     return;
   }
   document.getElementById("warning").style.display = "none";
+  document.getElementById("online").style.display = "flex";
 
   Object.entries(data).forEach(entry => {
     const [y, row] = entry;
