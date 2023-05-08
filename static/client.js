@@ -527,40 +527,28 @@ document.getElementById("remove-map").onclick = (e) => {
   ws.send(JSON.stringify({'type': 'map', 'value': 0}));
 };
 
-document.getElementById("warp-room").onclick = (e) => {
-  ws.send(JSON.stringify({'type': 'warp', 'room': document.getElementById('room').value, mode: 'room'}));
+document.getElementById("warp").onclick = (e) => {
+  let mode = 'room';
+  if (document.getElementById('warp-instant').checked) mode = 'instant';
+  ws.send(JSON.stringify({'type': 'warp', 'room': document.getElementById('room').value, mode: mode}));
 };
 
-document.getElementById("warp-instant").onclick = (e) => {
-  ws.send(JSON.stringify({'type': 'warp', 'room': document.getElementById('room').value, mode: 'instant'}));
+
+var map = document.getElementById('rooms');
+var mx = 0;
+var my = 0;
+panzoom(map);
+map.onclick = e => {
+  var room = parseInt(e.target.innerHTML.replaceAll(/[^0-9]/g, ''));
+  if (e.target.dataset.room) room = parseInt(e.target.dataset.room);
+  document.getElementById('room').value = room;
 };
+
 
 var ws = new WebSocket(window.location.href.replace('http', 'ws'));
 ws.binaryType = 'arraybuffer';
 var el = document.getElementById('data');
 var lel = document.getElementById('log');
-var bs = document.getElementById('bs');
-let but = document.createElement('button');
-
-var foo = {};
-
-Object.entries(names).forEach(e => {
-  const [y, row] = e;
-  Object.entries(row).forEach(e => {
-    const [x, name] = e;
-    let cat = name.split(':')[0];
-    if (!foo[cat]) foo[cat] = [];
-    foo[cat].push(name + "," + y + "," + x + "<br>");
-    //bs.innerHTML += name + "," + y + "," + x + "<br>";
-  });
-});
-
-Object.entries(foo).forEach(e => {
-  const [cat, stuff] = e;
-  stuff.forEach(e => {
-    //bs.innerHTML += e;
-  });
-});
 
 var oldw = 0;
 var checks = {};
