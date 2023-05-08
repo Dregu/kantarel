@@ -73,6 +73,7 @@ body, html {
   overflow: hidden;
 }
 #map-bg path {
+  cursor: pointer;
   stroke: #000000;
   stroke-width: 0.3;
 }
@@ -92,8 +93,9 @@ body, html {
 #map-bg path.acid-dungeon { fill: #5c351b; }
 
 #map-numbers text {
-  cursor: pointer;
+  pointer-events: none;
   user-select: none;
+
   font-style: normal;
   font-variant: normal;
   font-weight: bold;
@@ -113,3 +115,9 @@ body, html {
 #map-numbers text.room-bigshrine { fill: #ffff00; }
 #map-numbers text.room-start { fill: #00ff00; }
 #map-numbers text.room-cutscene { fill: #abcfef; }
+
+#map-doors path {
+  fill: #ffffff;
+  stroke: #000000;
+  stroke-width: 0.2;
+}
