@@ -72,10 +72,24 @@ body, html {
   right: 0;
   overflow: hidden;
 }
-
+#map-bg path {
+  stroke: #000000;
+  stroke-width: 0.3;
+}
 #map-bg path[data-room]:hover {
   fill: #eeeeee!important;
 }
+#map-bg path.deep-grotto { fill: #8675bd; }
+#map-bg path.mechanical-fort { fill: #468ed1; }
+#map-bg path.gold-mines { fill: #d48100; }
+#map-bg path.frozen-depths { fill: #0097b2; }
+#map-bg path.color-caverns { fill: #826a36; }
+#map-bg path.corrupted-tunnels { fill: #5a11ac; }
+#map-bg path.lava-temple { fill: #cc2b10; }
+#map-bg path.surface { fill: #534a43; }
+#map-bg path.undergrounds { fill: #4c3939; }
+#map-bg path.mossy-ruins { fill: #2e8b00; }
+#map-bg path.acid-dungeon { fill: #5c351b; }
 
 #map-numbers text {
   cursor: pointer;
