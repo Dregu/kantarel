@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
-  <title>KANTAREL 0.1 | Lone Fungus Live Save Editor</title>
+  <title>KANTAREL 0.2 | Lone Fungus Live Save Editor</title>
   <style>
       #data { display: table; border-collapse: collapse; }
       .xrow { display: table-row; }
@@ -4108,12 +4108,15 @@
     </div>
   </div>
   <div class="tab-pane" id="skin" role="tabpanel" aria-labelledby="skin-tab">
-   <h3>Custom Cap Generator (Very WIP)</h3>
+   <h3>Custom Cap Generator (WIP)</h3>
+   <span>There are a ton of different animation frames for the special skins in Lone Fungus, but they are all basically variations of the same three images. This tool tries to generate all the required textures for you from just two source images. The output textures can then be loaded as a SpecialK mod.</span>
    <div id="skin-settings" class="row">
       <div class="col-lg-4">
          <h4>How to use this tool</h4>
-         <span>Drag & drop the 4 source PNG files (preview, side, spin, trail) on the input boxes to generate a SpecialK texture mod for the selected cap. SpecialK actually needs DDS files, but PNG is easier to make final touches on after generation. You can convert the generated PNG files to DDS with ImageMagick for example:</span>
-         <pre>magick mogrify -path dds -format dds -define dds:compression=none png/*.png</pre>
+         <span>Drag & drop the 4 source PNG files (preview, side, spin, trail) on the input boxes to generate a <a href="https://wiki.special-k.info/">SpecialK</a> texture mod for the selected cap. SpecialK actually needs DDS files, but PNG is easier to make final touches on after generation. You can convert the generated PNG files to DDS with <a href="https://imagemagick.org/script/download.php">ImageMagick</a> for example:</span>
+         <pre>
+
+magick mogrify -path dds -format dds -define dds:compression=none png/*.png</pre>
       </div>
       <div class="col-lg-4">
          <h4>How to run the mod with SpecialK</h4>
@@ -4128,7 +4131,12 @@
       </div>
       <div class="col-lg-4">
          <h4>Templates (for Samuraicap)</h4>
-         <div><img src="img/caps/Samuraicap/preview.png"><img src="img/caps/Samuraicap/side.png"><img src="img/caps/Samuraicap/spin.png"><img src="img/caps/Samuraicap/trail.png"></div>
+         <div>
+            This cap is a bit bigger than greencap to hide some errors in the transform matrixes. You can't make it smaller, cause caps are drawn on top of greencap. You can go outside the template for a bit though, just don't resize the image. Drag the edited images to the input boxes the generate the rest of the frames.
+         </div>
+         <div>
+            <img src="img/caps/Samuraicap/preview.png"><img src="img/caps/Samuraicap/side.png"><img src="img/caps/Samuraicap/spin.png"><img src="img/caps/Samuraicap/trail.png">
+         </div>
       </div>
       <div class="input-group" role="group">
          <span class="input-group-text">Cap to mod</span>
@@ -4136,7 +4144,7 @@
          <span class="input-group-text">Output format</span>
          <select id="skin-format" class="form-control">
             <option value="png">PNG</option>
-            <option value="dds">DDS (TODO)</option>
+            <!--option value="dds">DDS (TODO)</option-->
          </select>
          <button id="skin-download" class="btn btn-success">Download Cap</button>
       </div>

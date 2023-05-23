@@ -1,3 +1,6 @@
+console.log('KANTAREL 0.2');
+console.log('Loading something probably...');
+
 const path = require('path');
 const mjs = require('memoryjs');
 var express = require('express');
@@ -65,7 +68,7 @@ function getData() {
   let w = readAddr(savePtr);
   let h = readAddr(savePtr + 4);
   if (w < 80 || w > 300 || h < 20 || h > 30) {
-    console.log('Invalid save')
+    //console.log('Invalid save');
     mjs.closeProcess(ps.handle);
     ps = {};
     return []
@@ -196,5 +199,6 @@ app.ws('/', function (ws, req) {
 let server = app.listen(0, 'localhost', () => {
   let url = 'http://localhost:' + server.address().port;
   console.log('Listening on ' + url);
+  console.log('Opening UI in default browser...');
   require('openurl').open(url);
 });

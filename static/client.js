@@ -927,3 +927,5 @@ var downloadSkin = () => {
 };
 
 document.getElementById('skin-download').onclick = downloadSkin;
+document.getElementById('skin').ondrop = dropHandler;
+document.getElementById('skin').ondragover = dragOverHandler;
