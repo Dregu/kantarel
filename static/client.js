@@ -688,3 +688,165 @@ ws.onmessage = function (e) {
     if (add) el.append(rel);
   });
 };
+
+/*
+Relics / Emblems = 2
+Mindshrooms = 1
+Brain Nodes = 2
+Ladybugs = 1
+Astral Fragments = 1
+Health Nodes = 2
+Abilities = 2
+Mapshrooms = 1
+it add adds up to 443 points
+*/
+
+// skins
+var skins = {
+  'Samuraicap': {
+    in: {
+      'preview': { w: 64, h: 64 },
+      'side': { w: 59, h: 33 },
+      'top': { w: 61, h: 41 },
+      'trail': { w: 59, h: 48 },
+    },
+    out: {
+      '41E3319E': { src: 'preview', w: 64, h: 64, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },     // preview
+
+      // RIGHTS
+      'FC41A9C1': { src: 'side', w: 59, h: 33, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },        // side
+      '71D4E8FC': { src: 'side', w: 58, h: 39, m: [1.00, 0.14, -0.14, 1.00, 4, -2] },      // 8deg
+      '444103F0': { src: 'side', w: 58, h: 42, m: [1.00, -0.16, 0.16, 1.00, -5, 9] },      // -9deg
+      '87802667': { src: 'side', w: 33, h: 59, m: [0.00, 1.00, -1.00, 0.00, 33, 0] },      // 90deg
+      '79484F87': { src: 'side', w: 58, h: 39, m: [-1.00, -0.16, 0.16, -1.00, 53, 42] },   // 189deg
+      '243856E9': { src: 'side', w: 39, h: 58, m: [-0.14, 1.00, -1.00, -0.14, 41, 4] },    // 98deg
+      'EB7D142B': { src: 'side', w: 39, h: 58, m: [0.14, -1.00, 1.00, 0.14, -2, 54] },     // -82deg
+
+      '4F196346': { src: 'side', w: 60, h: 31, m: [1.00, 0.00, 0.00, 31 / 33, 0, 0] },     // squish
+      '8C7C1241': { src: 'side', w: 50, h: 33, m: [50 / 59, 0.00, 0.00, 1.00, 0, 0] },     // squish
+      '49E9B9A9': { src: 'side', w: 55, h: 33, m: [55 / 59, 0.00, 0.00, 1.00, 0, 0] },     // squish
+      '218B7A12': { src: 'side', w: 59, h: 38, m: [1.00, 0.00, 0.00, 38 / 33, 0, 0] },     // squish
+      'A240653F': { src: 'side', w: 53, h: 35, m: [53 / 59, 0.00, 0.00, 35 / 33, 0, 0] },  // squish
+      'A894477F': { src: 'side', w: 62, h: 33, m: [62 / 59, 0.00, 0.00, 1.00, 0, 0] },     // squish
+      'B7FD89BC': { src: 'side', w: 62, h: 30, m: [62 / 59, 0.00, 0.00, 30 / 33, 0, 0] },  // squish
+      'E1FA2678': { src: 'side', w: 57, h: 33, m: [57 / 59, 0.00, 0.00, 1.00, 0, 0] },     // squish
+
+      '69A692A8': { src: 'side', w: 59, h: 33, m: [1.00, 0.00, 0.00, 1.00, 0, 0], f: 'contrast(1.05) brightness(1.25)' },     // brighter blink
+
+      '7EE6CAC4': { src: 'top', w: 61, h: 41, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },      // top
+      '25888596': { src: 'top', w: 61, h: 42, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },      // 1px higher?
+      '2A0B4D22': { src: 'top', w: 43, h: 61, m: [0.00, 1.00, -1.00, 0.00, 42, 0] },    // 90deg
+      '28D55BC9': { src: 'top', w: 43, h: 61, m: [0.00, -1.00, 1.00, 0.00, 1, 61] },    // -90deg
+      '9ACA061B': { src: 'top', w: 61, h: 43, m: [-1.00, 0.00, 0.00, -1.00, 61, 42] },  // 180deg
+
+      '1AE840F5': { src: 'top', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(175deg) drop-shadow(0 0 1px #333)' },        // spin trail blue
+      '44F74DC3': { src: 'top', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(310deg) drop-shadow(0 0 1px #333)' },        // spin trail red
+      'AEBA51E8': { src: 'top', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(250deg) drop-shadow(0 0 1px #333)' },        // spin trail purple
+
+      'EDD1D6CD': { src: 'trail', w: 59, h: 48, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },        // ghost trail
+      '37C5BE64': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(250deg) drop-shadow(0 0 1px #333)' },        // ghost trail purple
+      '87A6E7A1': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(175deg) drop-shadow(0 0 1px #333)' },        // ghost trail blue
+      'E0E6F821': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(60deg) drop-shadow(0 0 1px #333)' },        // ghost trail green
+      'F58DFFDB': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(310deg) drop-shadow(0 0 1px #333)' },        // ghost trail red
+
+      // LEFTS
+      // side
+      '4EF813FB': { mirror: 'FC41A9C1' },
+      '1A7754F2': { mirror: 'E1FA2678' },
+      '3A7A6037': { mirror: '79484F87' },
+    }
+  }
+};
+
+var sources = {};
+
+var selectedSkin = skins.Samuraicap;
+var scale = 3;
+
+var dropHandler = (e) => {
+  e.preventDefault();
+  if (e.dataTransfer.items) {
+    for (var i = 0; i < e.dataTransfer.items.length; i++) {
+      if (e.dataTransfer.items[i].kind === 'file') {
+        var file = e.dataTransfer.items[i].getAsFile();
+        var reader = new FileReader();
+        reader.onload = (() => {
+          return (f) => {
+            sources[e.target.className] = new Image();
+            sources[e.target.className].src = f.target.result;
+            sources[e.target.className].onload = () => {
+              var canvas = e.target;
+              var ctx = canvas.getContext('2d');
+              ctx.imageSmoothingEnabled = false;
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.drawImage(sources[e.target.className], 0, 0, sources[e.target.className].width, sources[e.target.className].height, 0, 0, canvas.width, canvas.height);
+              updateSkin(selectedSkin);
+            }
+          }
+        })(e.target);
+        reader.readAsDataURL(file);
+      }
+    }
+  }
+}
+
+var dragOverHandler = (e) => {
+  e.preventDefault();
+};
+
+var updateSkin = (s) => {
+  var el = document.getElementById('skin-output');
+  while (el.firstChild) el.removeChild(el.firstChild);
+
+  Object.entries(s.out).forEach(e => {
+    const [id, o] = e;
+    let canvas = document.createElement('canvas');
+    canvas.className = id;
+    let mtx = [1.00, 0.00, 0.00, 1.00, 0, 0];
+    if (o.mirror) {
+      console.log('mirror');
+      o.w = s.out[o.mirror].w;
+      o.h = s.out[o.mirror].h;
+      o.src = s.out[o.mirror].src;
+      o.f = s.out[o.mirror].f;
+      mtx = [...s.out[o.mirror].m];
+      mtx[0] *= -1;
+      mtx[2] *= -1;
+      mtx[4] += o.w;
+    } else if (o.m) {
+      mtx = [...o.m];
+    }
+    if (o.w) canvas.width = o.w;
+    if (o.h) canvas.height = o.h;
+    canvas.style.width = (scale * canvas.width) + 'px';
+    canvas.style.height = (scale * canvas.height) + 'px';
+    canvas.title = id + ' ' + canvas.width + 'x' + canvas.height;
+    let ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    ctx.transform(...mtx);
+    if (o.f) ctx.filter = o.f;
+    if (o.src && sources[o.src]) {
+      console.log('drawing', o.src, id);
+      ctx.drawImage(sources[o.src], 0, 0);
+    }
+    document.getElementById('skin-output').append(canvas);
+  });
+};
+
+Object.entries(skins).forEach(e => {
+  const [name, s] = e;
+  Object.entries(s.in).forEach(e => {
+    const [id, i] = e;
+    let canvas = document.createElement('canvas');
+    canvas.className = id;
+    canvas.width = i.w;
+    canvas.height = i.h;
+    canvas.style.width = (scale * i.w) + 'px';
+    canvas.style.height = (scale * i.h) + 'px';
+    canvas.title = id + ' ' + i.w + 'x' + i.h;
+    canvas.ondrop = dropHandler;
+    canvas.ondragover = dragOverHandler;
+    document.getElementById('skin-input').append(canvas);
+  });
+  updateSkin(s);
+});

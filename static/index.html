@@ -84,6 +84,9 @@
             <button class="nav-link btn btn-secondary" id="misc-tab" data-bs-toggle="tab" data-bs-target="#misc" type="button" role="tab" aria-controls="misc" aria-selected="false">Misc</button>
           </li>
           <li class="nav-item" role="presentation">
+            <button class="nav-link btn btn-secondary" id="skin-tab" data-bs-toggle="tab" data-bs-target="#skin" type="button" role="tab" aria-controls="skin" aria-selected="false">Skin</button>
+          </li>
+          <li class="nav-item" role="presentation">
             <button class="nav-link btn btn-secondary" id="debug-tab" data-bs-toggle="tab" data-bs-target="#debug" type="button" role="tab" aria-controls="debug" aria-selected="false">&hellip;</button>
           </li>
         </ul>
@@ -4104,6 +4107,12 @@
       <button class="btn btn-primary" id="remove-map">Hide all</button>
     </div>
   </div>
+  <div class="tab-pane" id="skin" role="tabpanel" aria-labelledby="skin-tab">
+   <h3>Input</h3>
+   <div id="skin-input"></div>
+   <h3>Output</h3>
+   <div id="skin-output"></div>
+ </div>
   <div class="tab-pane" id="debug" role="tabpanel" aria-labelledby="debug-tab">
     <h3>All data</h3>
     <div id="data" data-bs-theme="light"></div>

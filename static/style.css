@@ -128,6 +128,12 @@ body, html {
   margin: 7px;
 }
 
+canvas {
+  border: 1px dashed #eee;
+  margin-right: 5px;
+  image-rendering: pixelated;
+}
+
 @media (min-width: 992px) {
   .alert {
     position: absolute;
