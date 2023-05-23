@@ -84,7 +84,7 @@
             <button class="nav-link btn btn-secondary" id="misc-tab" data-bs-toggle="tab" data-bs-target="#misc" type="button" role="tab" aria-controls="misc" aria-selected="false">Misc</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link btn btn-secondary" id="skin-tab" data-bs-toggle="tab" data-bs-target="#skin" type="button" role="tab" aria-controls="skin" aria-selected="false">Skin</button>
+            <button class="nav-link btn btn-secondary" id="skin-tab" data-bs-toggle="tab" data-bs-target="#skin" type="button" role="tab" aria-controls="skin" aria-selected="false">Caps</button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link btn btn-secondary" id="debug-tab" data-bs-toggle="tab" data-bs-target="#debug" type="button" role="tab" aria-controls="debug" aria-selected="false">&hellip;</button>
@@ -4108,6 +4108,39 @@
     </div>
   </div>
   <div class="tab-pane" id="skin" role="tabpanel" aria-labelledby="skin-tab">
+   <h3>Custom Cap Generator (Very WIP)</h3>
+   <div id="skin-settings" class="row">
+      <div class="col-lg-4">
+         <h4>How to use this tool</h4>
+         <span>Drag & drop the 4 source PNG files (preview, side, spin, trail) on the input boxes to generate a SpecialK texture mod for the selected cap. SpecialK actually needs DDS files, but PNG is easier to make final touches on after generation. You can convert the generated PNG files to DDS with ImageMagick for example:</span>
+         <pre>magick mogrify -path dds -format dds -define dds:compression=none png/*.png</pre>
+      </div>
+      <div class="col-lg-4">
+         <h4>How to run the mod with SpecialK</h4>
+         <ol>
+            <li>Launch Lone Fungus with SpecialK</li>
+            <li>Hit Ctrl+Shift+Backspace to open SpecialK overlay</li>
+            <li>Click 'File &gt; Initialize Texture Mods'</li>
+            <li>Click 'File &gt; Browse Texture Assets &gt; Injectable Textures'</li>
+            <li>Place the DDS files to the inject/textures folder</li>
+            <li>Restart the game with SpecialK and play with the modded cap!</li>
+         </ol>
+      </div>
+      <div class="col-lg-4">
+         <h4>Templates (for Samuraicap)</h4>
+         <div><img src="img/caps/Samuraicap/preview.png"><img src="img/caps/Samuraicap/side.png"><img src="img/caps/Samuraicap/spin.png"><img src="img/caps/Samuraicap/trail.png"></div>
+      </div>
+      <div class="input-group" role="group">
+         <span class="input-group-text">Cap to mod</span>
+         <select id="skin-cap" class="form-control"><option value="Samuraicap">Samuraicap</option></select>
+         <span class="input-group-text">Output format</span>
+         <select id="skin-format" class="form-control">
+            <option value="png">PNG</option>
+            <option value="dds">DDS (TODO)</option>
+         </select>
+         <button id="skin-download" class="btn btn-success">Download Cap</button>
+      </div>
+   </div>
    <h3>Input</h3>
    <div id="skin-input"></div>
    <h3>Output</h3>
@@ -4123,6 +4156,8 @@
 </div>
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="panzoom.min.js"></script>
+<script src="FileSaver.min.js"></script>
+<script src="jszip.min.js"></script>
 <script src="client.js"></script>
 </body>
 </html>

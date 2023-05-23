@@ -707,7 +707,7 @@ var skins = {
     in: {
       'preview': { w: 64, h: 64 },
       'side': { w: 59, h: 33 },
-      'top': { w: 61, h: 41 },
+      'spin': { w: 61, h: 41 },
       'trail': { w: 59, h: 48 },
     },
     out: {
@@ -715,12 +715,12 @@ var skins = {
 
       // RIGHTS
       'FC41A9C1': { src: 'side', w: 59, h: 33, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },        // side
-      '71D4E8FC': { src: 'side', w: 58, h: 39, m: [1.00, 0.14, -0.14, 1.00, 4, -2] },      // 8deg
-      '444103F0': { src: 'side', w: 58, h: 42, m: [1.00, -0.16, 0.16, 1.00, -5, 9] },      // -9deg
+      '71D4E8FC': { src: 'side', w: 58, h: 39, m: [1.00, 0.16, -0.16, 1.00, 4, -2] },      // 8deg
+      '444103F0': { src: 'side', w: 58, h: 42, m: [1.00, -0.18, 0.18, 1.00, -5, 9] },      // -8deg
       '87802667': { src: 'side', w: 33, h: 59, m: [0.00, 1.00, -1.00, 0.00, 33, 0] },      // 90deg
-      '79484F87': { src: 'side', w: 58, h: 39, m: [-1.00, -0.16, 0.16, -1.00, 53, 42] },   // 189deg
+      '79484F87': { src: 'side', w: 58, h: 39, m: [-1.00, -0.17, 0.17, -1.00, 53, 42] },   // 188deg
       '243856E9': { src: 'side', w: 39, h: 58, m: [-0.14, 1.00, -1.00, -0.14, 41, 4] },    // 98deg
-      'EB7D142B': { src: 'side', w: 39, h: 58, m: [0.14, -1.00, 1.00, 0.14, -2, 54] },     // -82deg
+      'EB7D142B': { src: 'side', w: 39, h: 58, m: [0.16, -1.00, 1.00, 0.16, -2, 54] },     // -82deg
 
       '4F196346': { src: 'side', w: 60, h: 31, m: [1.00, 0.00, 0.00, 31 / 33, 0, 0] },     // squish
       '8C7C1241': { src: 'side', w: 50, h: 33, m: [50 / 59, 0.00, 0.00, 1.00, 0, 0] },     // squish
@@ -733,15 +733,15 @@ var skins = {
 
       '69A692A8': { src: 'side', w: 59, h: 33, m: [1.00, 0.00, 0.00, 1.00, 0, 0], f: 'contrast(1.05) brightness(1.25)' },     // brighter blink
 
-      '7EE6CAC4': { src: 'top', w: 61, h: 41, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },      // top
-      '25888596': { src: 'top', w: 61, h: 42, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },      // 1px higher?
-      '2A0B4D22': { src: 'top', w: 43, h: 61, m: [0.00, 1.00, -1.00, 0.00, 42, 0] },    // 90deg
-      '28D55BC9': { src: 'top', w: 43, h: 61, m: [0.00, -1.00, 1.00, 0.00, 1, 61] },    // -90deg
-      '9ACA061B': { src: 'top', w: 61, h: 43, m: [-1.00, 0.00, 0.00, -1.00, 61, 42] },  // 180deg
+      '7EE6CAC4': { src: 'spin', w: 61, h: 41, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },      // spin
+      '25888596': { src: 'spin', w: 61, h: 42, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },      // 1px higher?
+      '2A0B4D22': { src: 'spin', w: 43, h: 61, m: [0.00, 1.00, -1.00, 0.00, 42, 0] },    // 90deg
+      '28D55BC9': { src: 'spin', w: 43, h: 61, m: [0.00, -1.00, 1.00, 0.00, 1, 61] },    // -90deg
+      '9ACA061B': { src: 'spin', w: 61, h: 43, m: [-1.00, 0.00, 0.00, -1.00, 61, 42] },  // 180deg
 
-      '1AE840F5': { src: 'top', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(175deg) drop-shadow(0 0 1px #333)' },        // spin trail blue
-      '44F74DC3': { src: 'top', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(310deg) drop-shadow(0 0 1px #333)' },        // spin trail red
-      'AEBA51E8': { src: 'top', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(250deg) drop-shadow(0 0 1px #333)' },        // spin trail purple
+      '1AE840F5': { src: 'spin', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(175deg) drop-shadow(0 0 1px #333)' },        // spin trail blue
+      '44F74DC3': { src: 'spin', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(310deg) drop-shadow(0 0 1px #333)' },        // spin trail red
+      'AEBA51E8': { src: 'spin', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(250deg) drop-shadow(0 0 1px #333)' },        // spin trail purple
       // TODO: green right spin id missing?
 
       'EDD1D6CD': { src: 'trail', w: 59, h: 48, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },        // ghost trail
@@ -770,7 +770,7 @@ var skins = {
       '1A7754F2': { mirror: 'E1FA2678' },
       // blink
       '7C8B5890': { mirror: '69A692A8' },
-      // top
+      // spin
       '3477FB03': { mirror: '7EE6CAC4' },
       '604CC070': { mirror: '25888596' },
       'C2276784': { mirror: '2A0B4D22' },
@@ -837,6 +837,20 @@ var dragOverHandler = (e) => {
   e.preventDefault();
 };
 
+const filterSkin = (o) => {
+  const imageData = o.ctx.getImageData(0, 0, o.canvas.width, o.canvas.height);
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] < 10) {
+      data[i] = 0
+      data[i + 1] = 0
+      data[i + 2] = 0
+      data[i + 3] = 0
+    }
+  }
+  o.ctx.putImageData(imageData, 0, 0);
+};
+
 var updateSkin = (s) => {
   var el = document.getElementById('skin-output');
   while (el.firstChild) el.removeChild(el.firstChild);
@@ -844,6 +858,7 @@ var updateSkin = (s) => {
   Object.entries(s.out).forEach(e => {
     const [id, o] = e;
     let canvas = document.createElement('canvas');
+    o.canvas = canvas;
     canvas.className = id;
     let mtx = [1.00, 0.00, 0.00, 1.00, 0, 0];
     if (o.mirror) {
@@ -860,18 +875,19 @@ var updateSkin = (s) => {
     canvas.style.width = (scale * canvas.width) + 'px';
     canvas.style.height = (scale * canvas.height) + 'px';
     canvas.title = id + ' ' + canvas.width + 'x' + canvas.height;
-    let ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = false;
+    o.ctx = canvas.getContext('2d');
+    o.ctx.imageSmoothingEnabled = false;
     if (o.mirror) {
-      ctx.translate(canvas.width, 0);
-      ctx.scale(-1, 1);
+      o.ctx.translate(canvas.width, 0);
+      o.ctx.scale(-1, 1);
     }
-    ctx.transform(...mtx);
-    if (o.f) ctx.filter = o.f;
+    o.ctx.transform(...mtx);
+    if (o.f) o.ctx.filter = o.f;
+    o.ctx.filter += ' brightness(80%)';
     if (o.src && sources[o.src]) {
-      console.log('drawing', o.src, id);
-      ctx.drawImage(sources[o.src], 0, 0);
+      o.ctx.drawImage(sources[o.src], 0, 0);
     }
+    filterSkin(o);
     document.getElementById('skin-output').append(canvas);
   });
 };
@@ -891,5 +907,23 @@ Object.entries(skins).forEach(e => {
     canvas.ondragover = dragOverHandler;
     document.getElementById('skin-input').append(canvas);
   });
-  updateSkin(s);
 });
+
+var downloadSkin = () => {
+  var zip = new JSZip();
+  Object.entries(selectedSkin.out).forEach(e => {
+    const [id, o] = e;
+    if (o.canvas) {
+      var uri = o.canvas.toDataURL();
+      var idx = uri.indexOf('base64,') + 'base64,'.length;
+      var content = uri.substring(idx);
+      zip.file(id + '.png', content, { base64: true });
+    }
+  });
+  zip.generateAsync({type:"blob"})
+    .then(function(content) {
+      saveAs(content, "cap.zip");
+    });
+};
+
+document.getElementById('skin-download').onclick = downloadSkin;
