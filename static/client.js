@@ -742,6 +742,7 @@ var skins = {
       '1AE840F5': { src: 'top', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(175deg) drop-shadow(0 0 1px #333)' },        // spin trail blue
       '44F74DC3': { src: 'top', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(310deg) drop-shadow(0 0 1px #333)' },        // spin trail red
       'AEBA51E8': { src: 'top', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(250deg) drop-shadow(0 0 1px #333)' },        // spin trail purple
+      // TODO: green right spin id missing?
 
       'EDD1D6CD': { src: 'trail', w: 59, h: 48, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },        // ghost trail
       '37C5BE64': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(250deg) drop-shadow(0 0 1px #333)' },        // ghost trail purple
@@ -750,18 +751,53 @@ var skins = {
       'F58DFFDB': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(310deg) drop-shadow(0 0 1px #333)' },        // ghost trail red
 
       // LEFTS
-      // side
+      // side + rotates
       '4EF813FB': { mirror: 'FC41A9C1' },
-      '1A7754F2': { mirror: 'E1FA2678' },
+      '158CDF3E': { mirror: '71D4E8FC' },
+      '15358A00': { mirror: '444103F0' },
+      '678E3681': { mirror: '87802667' },
       '3A7A6037': { mirror: '79484F87' },
+      '24E26535': { mirror: '243856E9' },
+      'E95571BA': { mirror: 'EB7D142B' },
+      // side squishes
+      '7E28F932': { mirror: '4F196346' },
+      'D89F47E8': { mirror: '8C7C1241' },
+      'D90794AA': { mirror: '49E9B9A9' },
+      '828035B8': { mirror: '218B7A12' },
+      '1689E24D': { mirror: 'A240653F' },
+      '23B716A8': { mirror: 'A894477F' },
+      '6ADED588': { mirror: 'B7FD89BC' },
+      '1A7754F2': { mirror: 'E1FA2678' },
+      // blink
+      '7C8B5890': { mirror: '69A692A8' },
+      // top
+      '3477FB03': { mirror: '7EE6CAC4' },
+      '604CC070': { mirror: '25888596' },
+      'C2276784': { mirror: '2A0B4D22' },
+      'C2858CD6': { mirror: '28D55BC9' },
+      '6611F606': { mirror: '9ACA061B' },
+      // spin
+      'C8BDAC4C': { mirror: '1AE840F5' },
+      'ADEA117A': { mirror: '44F74DC3' },
+      '8C02D12C': { mirror: 'AEBA51E8' },
+      // TODO: green?
+      // trail
+      '51835505': { mirror: 'EDD1D6CD' },
+      '8F40D97F': { mirror: '37C5BE64' },
+      '83200992': { mirror: '87A6E7A1' },
+      '06BCD90E': { mirror: 'E0E6F821' },
+      '933C336A': { mirror: 'F58DFFDB' },
     }
   }
 };
 
 var sources = {};
-
 var selectedSkin = skins.Samuraicap;
 var scale = 3;
+
+var knownSource = (name) => {
+  return !!selectedSkin.in[name];
+};
 
 var dropHandler = (e) => {
   e.preventDefault();
@@ -770,16 +806,23 @@ var dropHandler = (e) => {
       if (e.dataTransfer.items[i].kind === 'file') {
         var file = e.dataTransfer.items[i].getAsFile();
         var reader = new FileReader();
+        reader.filename = e.target.className;
+        let filename = file.name.replace(/\.png$/ig, '');
+        if (knownSource(filename))
+          reader.filename = filename;
         reader.onload = (() => {
           return (f) => {
-            sources[e.target.className] = new Image();
-            sources[e.target.className].src = f.target.result;
-            sources[e.target.className].onload = () => {
-              var canvas = e.target;
+            let filename = f.target.filename;
+            sources[filename] = new Image();
+            sources[filename].dataset.filename = filename;
+            sources[filename].src = f.target.result;
+            sources[filename].onload = (g) => {
+              var filename = g.target.dataset.filename;
+              var canvas = document.querySelector('#skin-input .' + filename);
               var ctx = canvas.getContext('2d');
               ctx.imageSmoothingEnabled = false;
               ctx.clearRect(0, 0, canvas.width, canvas.height);
-              ctx.drawImage(sources[e.target.className], 0, 0, sources[e.target.className].width, sources[e.target.className].height, 0, 0, canvas.width, canvas.height);
+              ctx.drawImage(sources[filename], 0, 0, sources[filename].width, sources[filename].height, 0, 0, canvas.width, canvas.height);
               updateSkin(selectedSkin);
             }
           }
@@ -804,15 +847,11 @@ var updateSkin = (s) => {
     canvas.className = id;
     let mtx = [1.00, 0.00, 0.00, 1.00, 0, 0];
     if (o.mirror) {
-      console.log('mirror');
       o.w = s.out[o.mirror].w;
       o.h = s.out[o.mirror].h;
       o.src = s.out[o.mirror].src;
       o.f = s.out[o.mirror].f;
       mtx = [...s.out[o.mirror].m];
-      mtx[0] *= -1;
-      mtx[2] *= -1;
-      mtx[4] += o.w;
     } else if (o.m) {
       mtx = [...o.m];
     }
@@ -823,6 +862,10 @@ var updateSkin = (s) => {
     canvas.title = id + ' ' + canvas.width + 'x' + canvas.height;
     let ctx = canvas.getContext('2d');
     ctx.imageSmoothingEnabled = false;
+    if (o.mirror) {
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+    }
     ctx.transform(...mtx);
     if (o.f) ctx.filter = o.f;
     if (o.src && sources[o.src]) {
