@@ -716,7 +716,7 @@ var skins = {
       // RIGHTS
       'FC41A9C1': { src: 'side', w: 59, h: 33, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },        // side
       '71D4E8FC': { src: 'side', w: 58, h: 39, m: [1.00, 0.16, -0.16, 1.00, 4, -2] },      // 8deg
-      '444103F0': { src: 'side', w: 58, h: 42, m: [1.00, -0.18, 0.18, 1.00, -5, 9] },      // -8deg
+      '444103F0': { src: 'side', w: 58, h: 42, m: [1.00, -0.20, 0.20, 1.00, -6, 9] },      // -8deg
       '87802667': { src: 'side', w: 33, h: 59, m: [0.00, 1.00, -1.00, 0.00, 33, 0] },      // 90deg
       '79484F87': { src: 'side', w: 58, h: 39, m: [-1.00, -0.17, 0.17, -1.00, 53, 42] },   // 188deg
       '243856E9': { src: 'side', w: 39, h: 58, m: [-0.14, 1.00, -1.00, -0.14, 41, 4] },    // 98deg
@@ -736,19 +736,19 @@ var skins = {
       '7EE6CAC4': { src: 'spin', w: 61, h: 41, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },      // spin
       '25888596': { src: 'spin', w: 61, h: 42, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },      // 1px higher?
       '2A0B4D22': { src: 'spin', w: 43, h: 61, m: [0.00, 1.00, -1.00, 0.00, 42, 0] },    // 90deg
-      '28D55BC9': { src: 'spin', w: 43, h: 61, m: [0.00, -1.00, 1.00, 0.00, 1, 61] },    // -90deg
+      '28D55BC9': { src: 'spin', w: 43, h: 61, m: [0.00, -1.00, 1.00, 0.00, 0, 61] },    // -90deg
       '9ACA061B': { src: 'spin', w: 61, h: 43, m: [-1.00, 0.00, 0.00, -1.00, 61, 42] },  // 180deg
 
-      '1AE840F5': { src: 'spin', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(175deg) drop-shadow(0 0 1px #333)' },        // spin trail blue
-      '44F74DC3': { src: 'spin', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(310deg) drop-shadow(0 0 1px #333)' },        // spin trail red
-      'AEBA51E8': { src: 'spin', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(250deg) drop-shadow(0 0 1px #333)' },        // spin trail purple
-      // TODO: green right spin id missing?
+      '44F74DC3': { src: 'spin', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'contrast(60%) sepia(200%) saturate(400%) hue-rotate(310deg) drop-shadow(0 0 2px #922) brightness(70%) saturate(200%)' },        // spin trail red
+      'BA6253FB': { src: 'spin', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'contrast(60%) sepia(200%) saturate(400%) hue-rotate(60deg) drop-shadow(0 0 2px #292) brightness(70%) saturate(200%)' },        // spin trail green
+      '1AE840F5': { src: 'spin', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'contrast(60%) sepia(200%) saturate(400%) hue-rotate(175deg) drop-shadow(0 0 2px #229) brightness(70%) saturate(200%)' },        // spin trail blue
+      'AEBA51E8': { src: 'spin', w: 65, h: 46, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'contrast(60%) sepia(200%) saturate(400%) hue-rotate(250deg) drop-shadow(0 0 2px #929) brightness(70%) saturate(200%)' },        // spin trail purple
 
       'EDD1D6CD': { src: 'trail', w: 59, h: 48, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },        // ghost trail
-      '37C5BE64': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(250deg) drop-shadow(0 0 1px #333)' },        // ghost trail purple
-      '87A6E7A1': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(175deg) drop-shadow(0 0 1px #333)' },        // ghost trail blue
-      'E0E6F821': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(60deg) drop-shadow(0 0 1px #333)' },        // ghost trail green
-      'F58DFFDB': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'sepia(100%) saturate(400%) contrast(120%) hue-rotate(310deg) drop-shadow(0 0 1px #333)' },        // ghost trail red
+      'F58DFFDB': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'contrast(60%) sepia(200%) saturate(400%) hue-rotate(310deg) drop-shadow(0 0 2px #922) brightness(70%) saturate(200%)' },        // ghost trail red
+      'E0E6F821': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'contrast(60%) sepia(200%) saturate(400%) hue-rotate(60deg) drop-shadow(0 0 2px #292) brightness(70%) saturate(200%)' },        // ghost trail green
+      '87A6E7A1': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'contrast(60%) sepia(200%) saturate(400%) hue-rotate(175deg) drop-shadow(0 0 2px #229) brightness(70%) saturate(200%)' },        // ghost trail blue
+      '37C5BE64': { src: 'trail', w: 63, h: 52, m: [1.00, 0.00, 0.00, 1.00, 2, 2], f: 'contrast(60%) sepia(200%) saturate(400%) hue-rotate(250deg) drop-shadow(0 0 2px #929) brightness(70%) saturate(200%)' },        // ghost trail purple
 
       // LEFTS
       // side + rotates
@@ -780,6 +780,7 @@ var skins = {
       'C8BDAC4C': { mirror: '1AE840F5' },
       'ADEA117A': { mirror: '44F74DC3' },
       '8C02D12C': { mirror: 'AEBA51E8' },
+      'E96A3903': { mirror: 'BA6253FB' },
       // TODO: green?
       // trail
       '51835505': { mirror: 'EDD1D6CD' },
@@ -823,7 +824,7 @@ var dropHandler = (e) => {
               ctx.imageSmoothingEnabled = false;
               ctx.clearRect(0, 0, canvas.width, canvas.height);
               ctx.drawImage(sources[filename], 0, 0, sources[filename].width, sources[filename].height, 0, 0, canvas.width, canvas.height);
-              updateSkin(selectedSkin);
+              updateSkin();
             }
           }
         })(e.target);
@@ -851,7 +852,8 @@ const filterSkin = (o) => {
   o.ctx.putImageData(imageData, 0, 0);
 };
 
-var updateSkin = (s) => {
+var updateSkin = () => {
+  var s = selectedSkin;
   var el = document.getElementById('skin-output');
   while (el.firstChild) el.removeChild(el.firstChild);
   document.getElementById('skin-download').disabled = false;
@@ -873,18 +875,23 @@ var updateSkin = (s) => {
     }
     if (o.w) canvas.width = o.w;
     if (o.h) canvas.height = o.h;
+    canvas.style.backgroundImage = 'url(img/caps/Samuraicap/'+id+'.png)';
     canvas.style.width = (scale * canvas.width) + 'px';
     canvas.style.height = (scale * canvas.height) + 'px';
     canvas.title = id + ' ' + canvas.width + 'x' + canvas.height;
     o.ctx = canvas.getContext('2d');
-    o.ctx.imageSmoothingEnabled = false;
+    o.ctx.imageSmoothingEnabled = document.getElementById('skin-smoothing').checked;
     if (o.mirror) {
       o.ctx.translate(canvas.width, 0);
       o.ctx.scale(-1, 1);
     }
     o.ctx.transform(...mtx);
     if (o.f) o.ctx.filter = o.f;
-    o.ctx.filter += ' brightness(80%)';
+    // o.ctx.filter += ' brightness(80%)';
+    if (document.getElementById('skin-debug').checked) {
+      document.getElementById('skin').classList.add('debug');
+      o.ctx.globalAlpha = 0.25;
+    }
     if (o.src && sources[o.src]) {
       o.ctx.drawImage(sources[o.src], 0, 0);
     }
@@ -977,6 +984,18 @@ var downloadSkin = () => {
     });
 };
 
+var updateDebug = (e) => {
+  var on = e.target.checked;
+  if (on) {
+    document.getElementById('skin').classList.add('debug');
+  } else {
+    document.getElementById('skin').classList.remove('debug');
+  }
+  updateSkin();
+};
+
 document.getElementById('skin-download').onclick = downloadSkin;
+document.getElementById('skin-smoothing').onchange = updateSkin;
 document.getElementById('skin').ondrop = dropHandler;
 document.getElementById('skin').ondragover = dragOverHandler;
+document.getElementById('skin-debug').onchange = updateDebug;

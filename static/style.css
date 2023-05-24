@@ -136,6 +136,10 @@ canvas, #skin img {
   vertical-align: bottom;
 }
 
+#skin-output canvas {
+  border: 1px solid #eee;
+}
+
 @media (min-width: 992px) {
   .alert {
     position: absolute;
@@ -143,4 +147,18 @@ canvas, #skin img {
     right: 0;
     z-index: 10000;
   }
+}
+
+canvas {
+  background-position: -200% -200%;
+  background-repeat: no-repeat;
+}
+
+.debug canvas {
+  background-position: 50% 50%;
+  background-size: 100% 100%;
+}
+
+#skin-images {
+  margin: 10px 0;
 }
