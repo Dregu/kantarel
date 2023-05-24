@@ -854,6 +854,7 @@ const filterSkin = (o) => {
 var updateSkin = (s) => {
   var el = document.getElementById('skin-output');
   while (el.firstChild) el.removeChild(el.firstChild);
+  document.getElementById('skin-download').disabled = false;
 
   Object.entries(s.out).forEach(e => {
     const [id, o] = e;
@@ -887,7 +888,7 @@ var updateSkin = (s) => {
     if (o.src && sources[o.src]) {
       o.ctx.drawImage(sources[o.src], 0, 0);
     }
-    filterSkin(o);
+    //filterSkin(o);
     document.getElementById('skin-output').append(canvas);
   });
 };
@@ -909,20 +910,70 @@ Object.entries(skins).forEach(e => {
   });
 });
 
+
+var formatDate = (date) => {
+  var pad = (num) => {
+    return (num < 10 ? '0' : '') + num;
+  };
+  return date.getFullYear() +
+    '-' + pad(date.getMonth() + 1) +
+    '-' + pad(date.getDate()) +
+    '_' + pad(date.getHours()) +
+    '-' + pad(date.getMinutes()) +
+    '-' + pad(date.getSeconds());
+}
+
 var downloadSkin = () => {
+  var format = document.getElementById('skin-format').value;
+  var pma = document.getElementById('skin-premultiply').checked;
+  console.log('pma', pma);
   var zip = new JSZip();
   Object.entries(selectedSkin.out).forEach(e => {
     const [id, o] = e;
     if (o.canvas) {
-      var uri = o.canvas.toDataURL();
-      var idx = uri.indexOf('base64,') + 'base64,'.length;
-      var content = uri.substring(idx);
-      zip.file(id + '.png', content, { base64: true });
+      if (format == 'png' || format == 'all') {
+        var uri = o.canvas.toDataURL();
+        var idx = uri.indexOf('base64,') + 'base64,'.length;
+        var content = uri.substring(idx);
+        zip.file((format == 'all' ? 'png/' : '') + id + '.png', content, { base64: true });
+      }
+      if (format == 'dds' || format == 'all') {
+        var header = new Uint8Array([0x44, 0x44, 0x53, 0x20, 0x7C, 0x00, 0x00, 0x00, 0x0F, 0x10, 0x00, 0x00, 0x21, 0x00, 0x00, 0x00, 0x39, 0x00, 0x00, 0x00, 0xE4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0xFF, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+        header[12] = o.h;
+        header[16] = o.w;
+        const imageData = o.ctx.getImageData(0, 0, o.canvas.width, o.canvas.height);
+        for (let i = 0; i < imageData.data.length; i += 4) {
+          [imageData.data[i], imageData.data[i + 2]] = [imageData.data[i + 2], imageData.data[i]]
+          if (pma) {
+            var A = imageData.data[i + 3] / 255;
+            imageData.data[i]   = Math.floor(imageData.data[i] * A);
+            imageData.data[i+1] = Math.floor(imageData.data[i+1] * A);
+            imageData.data[i+2] = Math.floor(imageData.data[i+2] * A);
+          }
+        }
+        var data = new Uint8Array(header.length + imageData.data.length);
+        data.set(header);
+        data.set(imageData.data, header.length);
+        zip.file((format == 'all' ? 'dds/' : '') + id + '.dds', data.buffer);
+      }
     }
   });
+  if (format == 'all') {
+    document.querySelectorAll('#skin-input canvas').forEach(e => {
+      var uri = e.toDataURL();
+      var idx = uri.indexOf('base64,') + 'base64,'.length;
+      var content = uri.substring(idx);
+      zip.file('original/' + e.className + '.png', content, { base64: true });
+    });
+  }
+  var date = formatDate(new Date());
+  var zipname = 'kantarel_cap.zip';
+  if (format == 'all') zipname = 'kantarel_cap_bundle_' + date + '.zip';
+  if (format == 'png') zipname = 'kantarel_cap_png_' + date + '.zip';
+  if (format == 'dds') zipname = 'kantarel_cap_dds_' + date + '.zip';
   zip.generateAsync({type:"blob"})
     .then(function(content) {
-      saveAs(content, "cap.zip");
+      saveAs(content, zipname);
     });
 };
 

@@ -1,4 +1,4 @@
-# kantarel
+# KANTAREL
 
 Modding and hacking Lone Fungus
 

@@ -60,8 +60,9 @@ body, html {
   height: 2em;
 }
 
-#warp-instant {
-  margin: 2px 10px 0 0 ;
+.switch {
+  margin: 4px 10px 4px 0!important;
+  padding: 1px;
 }
 
 #map-box {
@@ -128,10 +129,11 @@ body, html {
   margin: 7px;
 }
 
-canvas {
+canvas, #skin img {
   border: 1px dashed #eee;
-  margin-right: 5px;
+  margin: 2px;
   image-rendering: pixelated;
+  vertical-align: bottom;
 }
 
 @media (min-width: 992px) {

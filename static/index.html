@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
-  <title>KANTAREL 0.2 | Lone Fungus Live Save Editor</title>
+  <title>KANTAREL 0.3 | Lone Fungus Live Save Editor</title>
   <style>
       #data { display: table; border-collapse: collapse; }
       .xrow { display: table-row; }
@@ -98,8 +98,8 @@
           <span class="input-group-text">Room</span>
           <input type="number" class="form-control" placeholder="Enter room number or click on the map to set room" id="room">
           <button class="btn btn-success" id="warp">Set as Up+Heal warp</button>
-          <div class="input-group-text form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="warp-instant" role="switch">
+          <div class="input-group-text form-switch">
+            <input class="form-check-input switch" type="checkbox" id="warp-instant" role="switch">
             <label class="form-check-label" for="warp-instant">Instant warp (into a wall)</label>
           </div>
         </div>
@@ -4108,12 +4108,12 @@
     </div>
   </div>
   <div class="tab-pane" id="skin" role="tabpanel" aria-labelledby="skin-tab">
-   <h3>Custom Cap Generator (WIP)</h3>
-   <span>There are a ton of different animation frames for the special skins in Lone Fungus, but they are all basically variations of the same three images. This tool tries to generate all the required textures for you from just two source images. The output textures can then be loaded as a SpecialK mod.</span>
+   <h3>Custom Cap Generator</h3>
+   <span>There are a ton of different animation frames for the special skins in Lone Fungus, but they are all basically variations of the same three images. This tool tries to generate all the required textures for you from just three source images. The output textures can then be loaded as a Special K mod.</span>
    <div id="skin-settings" class="row">
       <div class="col-lg-4">
          <h4>How to use this tool</h4>
-         <span>Drag & drop the 4 source PNG files (preview, side, spin, trail) on the input boxes to generate a <a href="https://wiki.special-k.info/">SpecialK</a> texture mod for the selected cap. SpecialK actually needs DDS files, but PNG is easier to make final touches on after generation. You can convert the generated PNG files to DDS with <a href="https://imagemagick.org/script/download.php">ImageMagick</a> for example:</span>
+         <span>Edit the provided template images. Don't make your skin too bright, the textures are <a href="img/caps/filtered.png">heavily filtered</a> ingame. Drag & drop the 4 edited source PNG files (preview, side, spin, trail) on the input boxes to generate a <a href="https://wiki.special-k.info/">Special K</a> texture mod for the selected cap. Special K needs the raw DDS texture files, but PNG is more versatile to make final touches on after generation. The DDS textures are expected to have <i>premultiplied alpha</i> however, which this tool does, but only for the DDS textures. Just be careful with your alphas if you need to edit anything. You can use <a href="https://www.gimp.org/downloads/">GIMP</a> to edit both formats or convert PNG images to DDS textures with <a href="https://imagemagick.org/script/download.php">ImageMagick</a>. Example (without premultiplied alpha):</span>
          <pre>
 
 magick mogrify -path dds -format dds -define dds:compression=none png/*.png</pre>
@@ -4132,7 +4132,7 @@ magick mogrify -path dds -format dds -define dds:compression=none png/*.png</pre
       <div class="col-lg-4">
          <h4>Templates (for Samuraicap)</h4>
          <div>
-            This cap is a bit bigger than greencap to hide some errors in the transform matrixes. You can't make it smaller, cause caps are drawn on top of greencap. You can go outside the template for a bit though, just don't resize the image. Drag the edited images to the input boxes the generate the rest of the frames.
+            This template cap is a bit bigger than greencap to hide some errors in the transform matrixes, the original textures were made by a human after all and can't be replicated exactly with any kind of transforms. You can't make it smaller, cause caps are drawn on top of greencap. You can go outside the template for a bit though, just don't resize the image. Because of rotations, anything outside the template can get lost in translation. The rotated frames are cropped to the exact dimensions of the original texture, not what your custom cap might need. Can't do anything about that, but Samuraicap was chosen as base because it was the largest and allows some fancy shit around the cap.
          </div>
          <div>
             <img src="img/caps/Samuraicap/preview.png"><img src="img/caps/Samuraicap/side.png"><img src="img/caps/Samuraicap/spin.png"><img src="img/caps/Samuraicap/trail.png">
@@ -4140,13 +4140,18 @@ magick mogrify -path dds -format dds -define dds:compression=none png/*.png</pre
       </div>
       <div class="input-group" role="group">
          <span class="input-group-text">Cap to mod</span>
-         <select id="skin-cap" class="form-control"><option value="Samuraicap">Samuraicap</option></select>
+         <select id="skin-cap" class="form-control" disabled><option value="Samuraicap">Samuraicap (only option atm, but it's the best template and you probably have it)</option></select>
          <span class="input-group-text">Output format</span>
          <select id="skin-format" class="form-control">
-            <option value="png">PNG</option>
-            <!--option value="dds">DDS (TODO)</option-->
+            <option value="all">Everything (PNG images + DDS textures + originals)</option>
+            <option value="png">PNG images for editing</option>
+            <option value="dds">DDS textures ready for injecting</option>
          </select>
-         <button id="skin-download" class="btn btn-success">Download Cap</button>
+         <div class="input-group-text form-switch">
+            <input class="form-check-input switch" type="checkbox" id="skin-premultiply" role="switch" checked>
+            <label class="form-check-label" for="skin-premultiply">Premultiply alpha</label>
+          </div>
+         <button id="skin-download" class="btn btn-success" disabled>Download Custom Cap as ZIP</button>
       </div>
    </div>
    <h3>Input</h3>
