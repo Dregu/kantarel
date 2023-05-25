@@ -1,4 +1,4 @@
-console.log('KANTAREL 0.4');
+console.log('KANTAREL 0.5');
 console.log('Loading something probably...');
 
 const path = require('path');

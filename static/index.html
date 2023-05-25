@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-    <title>KANTAREL 0.4 | Lone Fungus Live Save Editor</title>
+    <title>KANTAREL 0.5 | Lone Fungus Live Save Editor</title>
     <style>
         #data { display: table; border-collapse: collapse; }
         .xrow { display: table-row; }
@@ -4110,17 +4110,17 @@
     <div class="tab-pane" id="skin" role="tabpanel" aria-labelledby="skin-tab">
         <div id="skin-settings">
             <div class="input-group" role="group">
-                <span class="input-group-text">Cap to mod</span>
+                <!--span class="input-group-text">Cap to mod</span-->
                 <select id="skin-cap" class="form-control" disabled><option value="Samuraicap">Samuraicap (only option atm, maybe ever)</option></select>
-                <span class="input-group-text">Output format</span>
+                <!--span class="input-group-text">Output</span-->
                 <select id="skin-format" class="form-control">
-                    <option value="all">Everything (PNG images + DDS textures + originals)</option>
-                    <option value="png">PNG images for editing</option>
-                    <option value="dds">DDS textures ready for injecting</option>
+                    <option value="all">Output everything (PNG images + DDS textures + originals)</option>
+                    <option value="png">Output PNG images for editing</option>
+                    <option value="dds">Output DDS textures ready for injecting</option>
                 </select>
                 <div class="input-group-text form-switch" title="Transparent with original texture underneath to check positioning">
-                    <input class="form-check-input switch" type="checkbox" id="skin-debug" role="switch">
-                    <label class="form-check-label" for="skin-debug">Debug</label>
+                    <input class="form-check-input switch" type="checkbox" id="skin-debug-switch" role="switch">
+                    <label class="form-check-label" for="skin-debug-switch">Debug</label>
                 </div>
                 <div class="input-group-text form-switch" title="Smoothing makes pixel art look like crap, but maybe you prefer that">
                     <input class="form-check-input switch" type="checkbox" id="skin-smoothing" role="switch">
@@ -4130,7 +4130,7 @@
                     <input class="form-check-input switch" type="checkbox" id="skin-premultiply" role="switch" checked>
                     <label class="form-check-label" for="skin-premultiply">Premultiply alpha</label>
                 </div>
-                <button id="skin-download" class="btn btn-success" disabled>Download Custom Cap as ZIP</button>
+                <button id="skin-download" class="btn btn-success" disabled>Download Custom Cap</button>
             </div>
         </div>
         <div id="skin-images">
@@ -4143,7 +4143,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Templates for Samuraicap</h4>
                         <div>
-                            The <b>white template</b> is a bit bigger than Greencap to hide some errors in the transform matrixes, the original textures were made by a human after all and can't be replicated exactly with any automatic of transforms. The <b>green template</b> is exactly Greencap sized, but probably too small for all the transforms to look great right now, but I might fix them later. You can't make your cap any smaller, cause caps are drawn on top of Greencap. You can go outside the template, just don't resize the image. Anything far outside the template can get lost in translation though, because the rotated frames are cropped to the exact dimensions of the original texture, not what your custom cap might need. Can't do anything about that. Samuraicap was chosen as base because it was the largest and allows some fancy shit around the cap. All templates are facing right and will be flipped when needed. <a href="kantarel_cap_templates_Samuraicap.zip">Download all templates</a>
+                            The <b style="color: #fff">white template</b> is a bit bigger than Greencap to hide some errors in the transformations, the original textures were made by a human after all and can't be replicated exactly with any automatic transforms. The <b style="color: #0f0">green template</b> is exactly Greencap sized, but might not cover the original exactly after transformations. You can't make your cap any smaller than that, cause caps are drawn on top of Greencap. You can go outside the template, just don't resize the image. Anything far outside the template can get lost in translation though, because the rotated frames are cropped to the exact dimensions of the original texture, not what your custom cap might need. Can't do anything about that. Samuraicap was chosen as base because it was the largest and allows some fancy shit around the cap. All templates are facing right and will be flipped when needed. <a href="kantarel_cap_templates_Samuraicap.zip">Download all templates</a>
                         </div>
                         <div>
                             <img src="img/caps/Samuraicap/white/preview.png"><img src="img/caps/Samuraicap/white/side.png"><img src="img/caps/Samuraicap/white/spin.png"><img src="img/caps/Samuraicap/white/trail.png">
@@ -4162,7 +4162,7 @@
                     <div class="card-body">
                         <h4 class="card-title">How to use this tool</h4>
                         <p>
-                            There are a ton of different animation frames for the special skins in Lone Fungus, but they are all basically variations of the same three images. This tool tries to generate all the required textures for you from just three source images. The output textures can then be loaded as a Special K mod.
+                            There are a ton of different animation frames for the special skins in Lone Fungus, but they are all basically variations of the same three images. This tool tries to generate all the ~60 required cap animation frames for you from just three source images. The output textures can then be loaded as a Special K mod.
                         </p>
                         <p>
                             Edit the provided template images. Don't make your skin too bright, the textures are <a href="img/caps/filtered.png">heavily filtered</a> ingame. Drag & drop the 4 edited source PNG files (preview, side, spin, trail) anywhere to generate a <a href="https://wiki.special-k.info/">Special K</a> texture mod for the selected cap. Special K needs the raw DDS texture files, but PNG is more versatile to make final touches on after generation. The DDS textures are expected to have <i>premultiplied alpha</i> however, which this tool does, but only for the DDS textures. Just be careful with your alphas if you need to edit anything. You can use <a href="https://www.gimp.org/downloads/">GIMP</a> to edit both formats or convert PNG images to DDS textures with <a href="https://imagemagick.org/script/download.php">ImageMagick</a>. Example (without premultiplied alpha):
@@ -4180,9 +4180,52 @@
                             <li>Hit Ctrl+Shift+Backspace to open SpecialK overlay</li>
                             <li>Click 'File &gt; Initialize Texture Mods'</li>
                             <li>Click 'File &gt; Browse Texture Assets &gt; Injectable Textures'</li>
-                            <li>Place the DDS files to the inject/textures folder</li>
+                            <li>Extract the DDS files from this tool to the 'inject/textures' folder</li>
                             <li>Restart the game with SpecialK and play with the modded cap!</li>
                         </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="skin-debug">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Global</h4>
+                    <div class="input-group mb-2" role="group">
+                        <span class="input-group-text">Opacity</span>
+                        <input type="range" min="0" max="100" id="skin-debug-opacity" class="form-control">
+                    </div>
+                    <div class="input-group mb-2" role="group">
+                        <span class="input-group-text">Scale</span>
+                        <input type="number" value="3" min="1" max="10" id="skin-debug-scale" class="form-control">
+                    </div>
+                    <div class="input-group mb-2" role="group">
+                        <span class="input-group-text">Filter</span>
+                        <input type="text" id="skin-debug-filter" class="form-control">
+                    </div>
+
+                    <div id="skin-texture" data-id="">
+                        <h4 class="card-title" id="skin-id"></h4>
+                        <div class="input-group mb-2" role="group">
+                            <span class="input-group-text">Angle</span>
+                            <input type="number" step="0.5" id="skin-id-angle" class="form-control">
+                        </div>
+                        <div class="input-group mb-2" role="group">
+                            <span class="input-group-text">X</span>
+                            <input type="number" id="skin-id-x" class="form-control">
+                        </div>
+                        <div class="input-group mb-2" role="group">
+                            <span class="input-group-text">Y</span>
+                            <input type="number" id="skin-id-y" class="form-control">
+                        </div>
+                        <div class="input-group mb-2" role="group">
+                            <span class="input-group-text">Matrix</span>
+                            <input type="text" id="skin-id-matrix" class="form-control">
+                        </div>
+                        <div class="input-group" role="group">
+                            <span class="input-group-text">Filter</span>
+                            <input type="text" id="skin-id-filter" class="form-control">
+                        </div>
                     </div>
                 </div>
             </div>

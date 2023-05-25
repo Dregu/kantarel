@@ -711,27 +711,27 @@ var skins = {
       'trail': { w: 59, h: 48 },
     },
     out: {
-      '41E3319E': { src: 'preview', w: 64, h: 64, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },     // preview
+      '41E3319E': { src: 'preview', w: 64, h: 64 },     // preview
 
       // RIGHTS
-      'FC41A9C1': { src: 'side', w: 59, h: 33, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },        // side
-      '71D4E8FC': { src: 'side', w: 58, h: 39, m: [1.00, 0.16, -0.16, 1.00, 4, -2] },      // 8deg
-      '444103F0': { src: 'side', w: 58, h: 42, m: [1.00, -0.20, 0.20, 1.00, -6, 9] },      // -8deg
-      '87802667': { src: 'side', w: 33, h: 59, m: [0.00, 1.00, -1.00, 0.00, 33, 0] },      // 90deg
-      '79484F87': { src: 'side', w: 58, h: 39, m: [-1.00, -0.17, 0.17, -1.00, 53, 42] },   // 188deg
-      '243856E9': { src: 'side', w: 39, h: 58, m: [-0.14, 1.00, -1.00, -0.14, 41, 4] },    // 98deg
-      'EB7D142B': { src: 'side', w: 39, h: 58, m: [0.16, -1.00, 1.00, 0.16, -2, 54] },     // -82deg
+      'FC41A9C1': { src: 'side', w: 59, h: 33 },
+      '71D4E8FC': { src: 'side', w: 58, h: 39, a: 14.5, x: 5, y: 0 },
+      '444103F0': { src: 'side', w: 58, h: 42, a: -14.5, x: -4, y: -1 },
+      '87802667': { src: 'side', w: 33, h: 59, a: 90 },
+      '79484F87': { src: 'side', w: 58, h: 39, a: 188.7, x: -3, y: 1 },
+      '243856E9': { src: 'side', w: 39, h: 58, a: 98, x: 1, y: 2 },
+      'EB7D142B': { src: 'side', w: 39, h: 58, a: -82, x: -1, y: -3 },
 
       '4F196346': { src: 'side', w: 60, h: 31, m: [1.00, 0.00, 0.00, 31 / 33, 0, 0] },     // squish
       '8C7C1241': { src: 'side', w: 50, h: 33, m: [50 / 59, 0.00, 0.00, 1.00, 0, 0] },     // squish
       '49E9B9A9': { src: 'side', w: 55, h: 33, m: [55 / 59, 0.00, 0.00, 1.00, 0, 0] },     // squish
-      '218B7A12': { src: 'side', w: 59, h: 38, m: [1.00, 0.00, 0.00, 38 / 33, 0, 0] },     // squish
+      '218B7A12': { src: 'side', w: 59, h: 38, m: [1.07, 0, 0, 1.2, -2, -1] },             // squish
       'A240653F': { src: 'side', w: 53, h: 35, m: [53 / 59, 0.00, 0.00, 35 / 33, 0, 0] },  // squish
       'A894477F': { src: 'side', w: 62, h: 33, m: [62 / 59, 0.00, 0.00, 1.00, 0, 0] },     // squish
       'B7FD89BC': { src: 'side', w: 62, h: 30, m: [62 / 59, 0.00, 0.00, 30 / 33, 0, 0] },  // squish
       'E1FA2678': { src: 'side', w: 57, h: 33, m: [57 / 59, 0.00, 0.00, 1.00, 0, 0] },     // squish
 
-      '69A692A8': { src: 'side', w: 59, h: 33, m: [1.00, 0.00, 0.00, 1.00, 0, 0], f: 'contrast(1.05) brightness(1.25)' },     // brighter blink
+      '69A692A8': { src: 'side', w: 59, h: 33, m: [1.00, 0.00, 0.00, 1.00, 0, 0], f: 'contrast(110%) brightness(130%)' },     // brighter blink
 
       '7EE6CAC4': { src: 'spin', w: 61, h: 41, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },      // spin
       '25888596': { src: 'spin', w: 61, h: 42, m: [1.00, 0.00, 0.00, 1.00, 0, 0] },      // 1px higher?
@@ -776,12 +776,11 @@ var skins = {
       'C2276784': { mirror: '2A0B4D22' },
       'C2858CD6': { mirror: '28D55BC9' },
       '6611F606': { mirror: '9ACA061B' },
-      // spin
+      // spin trails
       'C8BDAC4C': { mirror: '1AE840F5' },
       'ADEA117A': { mirror: '44F74DC3' },
       '8C02D12C': { mirror: 'AEBA51E8' },
       'E96A3903': { mirror: 'BA6253FB' },
-      // TODO: green?
       // trail
       '51835505': { mirror: 'EDD1D6CD' },
       '8F40D97F': { mirror: '37C5BE64' },
@@ -794,7 +793,6 @@ var skins = {
 
 var sources = {};
 var selectedSkin = skins.Samuraicap;
-var scale = 3;
 
 var knownSource = (name) => {
   return !!selectedSkin.in[name];
@@ -814,16 +812,16 @@ var dropHandler = (e) => {
         reader.onload = (() => {
           return (f) => {
             let filename = f.target.filename;
-            sources[filename] = new Image();
-            sources[filename].dataset.filename = filename;
-            sources[filename].src = f.target.result;
-            sources[filename].onload = (g) => {
+            sources[filename] = { img: new Image(), in: selectedSkin.in[filename] };
+            sources[filename].img.dataset.filename = filename;
+            sources[filename].img.src = f.target.result;
+            sources[filename].img.onload = (g) => {
               var filename = g.target.dataset.filename;
               var canvas = document.querySelector('#skin-input .' + filename);
               var ctx = canvas.getContext('2d');
               ctx.imageSmoothingEnabled = false;
               ctx.clearRect(0, 0, canvas.width, canvas.height);
-              ctx.drawImage(sources[filename], 0, 0, sources[filename].width, sources[filename].height, 0, 0, canvas.width, canvas.height);
+              ctx.drawImage(sources[filename].img, 0, 0, sources[filename].img.width, sources[filename].img.height, 0, 0, canvas.width, canvas.height);
               updateSkin();
             }
           }
@@ -838,6 +836,7 @@ var dragOverHandler = (e) => {
   e.preventDefault();
 };
 
+// obsolete with premultiplied alpha
 const filterSkin = (o) => {
   const imageData = o.ctx.getImageData(0, 0, o.canvas.width, o.canvas.height);
   const data = imageData.data;
@@ -852,7 +851,26 @@ const filterSkin = (o) => {
   o.ctx.putImageData(imageData, 0, 0);
 };
 
+var drawRotated = (o) => {
+  var rad = (o.a || 0) * Math.PI / 180;
+  var i = sources[o.src].in;
+  o.ctx.save();
+  o.ctx.translate(o.w/2 + (o.x || 0), o.h/2 + (o.y || 0));
+  o.ctx.rotate(rad);
+  o.ctx.translate(-i.w/2, -i.h/2);
+  o.ctx.drawImage(sources[o.src].img, 0, 0);
+  o.ctx.restore();
+}
+
 var updateSkin = () => {
+  var scale = document.getElementById('skin-debug-scale').value;
+  document.querySelectorAll('#skin-input canvas').forEach((canvas) => {
+    var id = canvas.className;
+    var i = selectedSkin.in[id];
+    canvas.style.width = (scale * i.w) + 'px';
+    canvas.style.height = (scale * i.h) + 'px';
+  });
+  if (Object.keys(sources).length == 0) return;
   var s = selectedSkin;
   var el = document.getElementById('skin-output');
   while (el.firstChild) el.removeChild(el.firstChild);
@@ -860,43 +878,44 @@ var updateSkin = () => {
 
   Object.entries(s.out).forEach(e => {
     const [id, o] = e;
-    let canvas = document.createElement('canvas');
-    o.canvas = canvas;
-    canvas.className = id;
-    let mtx = [1.00, 0.00, 0.00, 1.00, 0, 0];
+    o.canvas = document.createElement('canvas');
+    o.canvas.className = id;
+    //let mtx = [1.00, 0.00, 0.00, 1.00, 0, 0];
     if (o.mirror) {
       o.w = s.out[o.mirror].w;
       o.h = s.out[o.mirror].h;
-      o.src = s.out[o.mirror].src;
       o.f = s.out[o.mirror].f;
-      mtx = [...s.out[o.mirror].m];
-    } else if (o.m) {
-      mtx = [...o.m];
+      o.m = s.out[o.mirror].m;
+      o.a = s.out[o.mirror].a;
+      o.x = s.out[o.mirror].x;
+      o.y = s.out[o.mirror].y;
+      o.src = s.out[o.mirror].src;
     }
-    if (o.w) canvas.width = o.w;
-    if (o.h) canvas.height = o.h;
-    canvas.style.backgroundImage = 'url(img/caps/Samuraicap/'+id+'.png)';
-    canvas.style.width = (scale * canvas.width) + 'px';
-    canvas.style.height = (scale * canvas.height) + 'px';
-    canvas.title = id + ' ' + canvas.width + 'x' + canvas.height;
-    o.ctx = canvas.getContext('2d');
+    if (o.w) o.canvas.width = o.w;
+    if (o.h) o.canvas.height = o.h;
+    o.canvas.style.backgroundImage = 'url(img/caps/Samuraicap/'+id+'.png)';
+    o.canvas.style.width = (scale * o.canvas.width) + 'px';
+    o.canvas.style.height = (scale * o.canvas.height) + 'px';
+    o.canvas.title = id + ' ' + o.canvas.width + 'x' + o.canvas.height;
+    o.ctx = o.canvas.getContext('2d');
     o.ctx.imageSmoothingEnabled = document.getElementById('skin-smoothing').checked;
     if (o.mirror) {
-      o.ctx.translate(canvas.width, 0);
+      o.ctx.translate(o.canvas.width, 0);
       o.ctx.scale(-1, 1);
     }
-    o.ctx.transform(...mtx);
-    if (o.f) o.ctx.filter = o.f;
-    // o.ctx.filter += ' brightness(80%)';
-    if (document.getElementById('skin-debug').checked) {
+    if (o.m) o.ctx.transform(...o.m);
+    o.ctx.filter = o.f;
+    if (document.getElementById('skin-debug-switch').checked) {
       document.getElementById('skin').classList.add('debug');
-      o.ctx.globalAlpha = 0.25;
+      o.ctx.globalAlpha = document.getElementById('skin-debug-opacity').value / 100;
+      o.ctx.filter = (o.ctx.filter == 'none' ? '' : o.ctx.filter + ' ') + document.getElementById('skin-debug-filter').value;
+      o.canvas.onclick = setTexture;
     }
     if (o.src && sources[o.src]) {
-      o.ctx.drawImage(sources[o.src], 0, 0);
+      if (o.m && o.m.length) o.ctx.drawImage(sources[o.src].img, 0, 0);
+      else drawRotated(o);
     }
-    //filterSkin(o);
-    document.getElementById('skin-output').append(canvas);
+    document.getElementById('skin-output').append(o.canvas);
   });
 };
 
@@ -904,6 +923,7 @@ Object.entries(skins).forEach(e => {
   const [name, s] = e;
   Object.entries(s.in).forEach(e => {
     const [id, i] = e;
+    var scale = document.getElementById('skin-debug-scale').value;
     let canvas = document.createElement('canvas');
     canvas.className = id;
     canvas.width = i.w;
@@ -933,7 +953,6 @@ var formatDate = (date) => {
 var downloadSkin = () => {
   var format = document.getElementById('skin-format').value;
   var pma = document.getElementById('skin-premultiply').checked;
-  console.log('pma', pma);
   var zip = new JSZip();
   Object.entries(selectedSkin.out).forEach(e => {
     const [id, o] = e;
@@ -984,8 +1003,8 @@ var downloadSkin = () => {
     });
 };
 
-var updateDebug = (e) => {
-  var on = e.target.checked;
+var updateDebug = () => {
+  var on = document.getElementById('skin-debug-switch').checked;
   if (on) {
     document.getElementById('skin').classList.add('debug');
   } else {
@@ -994,8 +1013,69 @@ var updateDebug = (e) => {
   updateSkin();
 };
 
+var setTexture = (e) => {
+  var id = e.target.className;
+  var o = selectedSkin.out[id];
+  document.getElementById('skin-texture').dataset.id = id;
+  document.getElementById('skin-id').innerHTML = id;
+  document.getElementById('skin-id-angle').value = o.a || 0;
+  document.getElementById('skin-id-x').value = o.x || 0;
+  document.getElementById('skin-id-y').value = o.y || 0;
+  document.getElementById('skin-id-matrix').value = o.m ? o.m.join(',') : '';
+  document.getElementById('skin-id-filter').value = o.f || '';
+};
+
 document.getElementById('skin-download').onclick = downloadSkin;
 document.getElementById('skin-smoothing').onchange = updateSkin;
 document.getElementById('skin').ondrop = dropHandler;
 document.getElementById('skin').ondragover = dragOverHandler;
-document.getElementById('skin-debug').onchange = updateDebug;
+document.getElementById('skin-debug-switch').onchange = updateDebug;
+document.getElementById('skin-debug-opacity').onchange = updateSkin;
+document.getElementById('skin-debug-scale').onchange = updateSkin;
+document.getElementById('skin-debug-filter').onkeyup = updateSkin;
+
+var changeAngle = (e) => {
+  var id = document.getElementById('skin-texture').dataset.id;
+  var o = selectedSkin.out[id];
+  o.a = e.target.value;
+  updateSkin();
+};
+
+var changeX = (e) => {
+  var id = document.getElementById('skin-texture').dataset.id;
+  var o = selectedSkin.out[id];
+  o.x = 1*e.target.value;
+  updateSkin();
+};
+
+var changeY = (e) => {
+  var id = document.getElementById('skin-texture').dataset.id;
+  var o = selectedSkin.out[id];
+  o.y = 1*e.target.value;
+  updateSkin();
+};
+
+var changeMatrix = (e) => {
+  var id = document.getElementById('skin-texture').dataset.id;
+  var o = selectedSkin.out[id];
+  var strs = e.target.value.split(',');
+  var mtx = strs.map(Number);
+  console.log(mtx);
+  o.m = mtx;
+  updateSkin();
+};
+
+var changeFilter = (e) => {
+  var id = document.getElementById('skin-texture').dataset.id;
+  var o = selectedSkin.out[id];
+  o.f = e.target.value;
+  updateSkin();
+};
+
+document.getElementById('skin-id-angle').onchange = changeAngle;
+document.getElementById('skin-id-x').onchange = changeX;
+document.getElementById('skin-id-y').onchange = changeY;
+document.getElementById('skin-id-matrix').onchange = changeMatrix;
+document.getElementById('skin-id-filter').onkeyup = changeFilter;
+
+window.onload = (e) => updateDebug;
